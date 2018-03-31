@@ -1,0 +1,116 @@
+{
+	"stations":[
+		{
+			"id" : 0,
+			"name" : "Go",
+			"lat" : 38.26338820960,
+			"long" : -104.60812617700,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 0
+		},
+		{
+			"id" : 1,
+			"name" : "Mediterranean Avenue",
+			"lat" : 38.26344927810,
+			"long" : -104.60895582800,
+			"value" : 60,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 1
+		},
+		{
+			"id" : 2,
+			"name" : "Community Chest",
+			"lat" : 38.26360899660,
+			"long" : -104.60929056400,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 2
+		},
+		{
+			"id" : 3,
+			"name" : "Baltic Avenue",
+			"lat" : 38.26382985640,
+			"long" : -104.60957229700,
+			"value" : 60,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 1
+		},
+		{
+			"id" : 4,
+			"name" : "Oriental Avenue",
+			"lat" : 38.26406570320,
+			"long" : -104.60989639000,
+			"value" : 100,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 1
+		},
+		{
+			"id" : 5,
+			"name" : "Chance",
+			"lat" : 38.26421538220,
+			"long" : -104.61027530500,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 2
+		},
+		{
+			"id" : 6,
+			"name" : "Vermont Avenue",
+			"lat" : 38.26444899970,
+			"long" : -104.61056653000,
+			"value" : 100,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 1
+		},
+		{
+			"id" : 7,
+			"name" : "Connecticut Avenue",
+			"lat" : 38.26459496980,
+			"long" : -104.61094511100,
+			"value" : 100,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 1
+		},
+		{
+			"id" : 8,
+			"name" : "Jail",
+			"lat" : 38.26473740360,
+			"long" : -104.61132583100,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 3
+		},
+		{
+			"id" : 9,
+			"name" : "Go To Jail",
+			"lat" : 38.26483562310,
+			"long" : -104.61173440800,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 4
+		},
+		{
+			"id" : 10,
+			"name" : "Free Parking",
+			"lat" : 38.26501526570,
+			"long" : -104.61209046800,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 3
+		}
+		
+		
+	]
+}
