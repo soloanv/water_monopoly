@@ -5,21 +5,27 @@
 			"tName" : "Arkansas River",
 			"tPassOne" : "Denver",
 			"tPassTwo" : "Pueblo",
-			"balance" : 200
+			"balance" : 1500,
+			"location" : 0,
+			"destination" : 0
 		},
 		{
 			"id" : 1,
 			"tName" : "Colorado River",
 			"tPassOne" : "Boulder",
 			"tPassTwo" : "Trinidad",
-			"balance" : 200
+			"balance" : 1500,
+			"location" : 0,
+			"destination" : 0
 		},
 		{
 			"id" : 2,
 			"tName" : "South Platte River",
 			"tPassOne" : "Pueblo",
 			"tPassTwo" : "Boulder",
-			"balance" : 200
+			"balance" : 1500,
+			"location" : 0,
+			"destination" : 0
 		}
 	]
 }
