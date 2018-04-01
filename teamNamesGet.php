@@ -46,6 +46,8 @@ if ($result->num_rows > 0){
 	//fetch_assoc returns the key-value pairs instead of just data
 	//This is much more useful when you are returning multiple columns
 	//per row, instead of just one. But I am still using it here 
+	//Check out the teamPassGet.php file to see a situation where fetch_assoc() 
+	//is essential to the function.
 	
 	while($row = $result->fetch_assoc()){
 		//Here I am appending the "tName" value for each row.
