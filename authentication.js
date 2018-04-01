@@ -18,16 +18,12 @@ function fillTeams() {
 			//Parsing the response string as a JSON.
 			responseJSON = JSON.parse(this.responseText);
 			
-			//pulling the teams array out of the json and putting it is "teamList" variable.
-			var teamList = responseJSON.teams;
-			
-			
 			//Looping through the array
-			for(var i = 0; i < teamList.length ; i++){
+			for(var i = 0; i < responseJSON.length ; i++){
 				
 				//here is where the new option for the combobox is created for each team.
 				var newOption = document.createElement("option");
-				newOption.text = teamList[i].tName;
+				newOption.text = responseJSON[i];
 				newOption.value = i;
 		
 				//apparently some browsers require the null and others don't.
@@ -47,7 +43,7 @@ function fillTeams() {
 	};
 	
 	//Here is where the actual request happens
-	xmlhttp.open("GET", "teamsGet.php", true);
+	xmlhttp.open("GET", "teamNamesGet.php", true);
 	xmlhttp.send();
 }
 
@@ -60,7 +56,8 @@ function validateLogin() {
 		if (this.readyState == 4 && this.status == 200){
 			
 			responseJSON = JSON.parse(this.responseText);
-			var teamList = responseJSON.teams;
+			
+			var teamList = responseJSON;
 			
 			var checkPassOne = teamList[document.getElementById('teamNameCombo').value].tPassOne;
 			var checkPassTwo = teamList[document.getElementById('teamNameCombo').value].tPassTwo;
@@ -80,11 +77,13 @@ function validateLogin() {
 	};
 	
 	//Here is where the actual request happens
-	xmlhttp.open("GET", "teamsGet.php", true);
+	xmlhttp.open("GET", "teamPassGet.php", true);
 	xmlhttp.send();
 	
 	
 };
+
+
 	
 	
 
