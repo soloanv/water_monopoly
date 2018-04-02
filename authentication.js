@@ -49,18 +49,21 @@ function fillTeams() {
 
 function validateLogin() {
 	
-	alert('validatelogin');
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		
 		if (this.readyState == 4 && this.status == 200){
 			
+			if(document.getElementById('teamNameCombo').value == "Select name..."){
+				alert('Please Select A Team');
+			}
+			
 			responseJSON = JSON.parse(this.responseText);
 			
 			var teamList = responseJSON;
 			
-			var checkPassOne = teamList[document.getElementById('teamNameCombo').value - 1].tPassOne;
-			var checkPassTwo = teamList[document.getElementById('teamNameCombo').value - 1].tPassTwo;
+			var checkPassOne = teamList[document.getElementById('teamNameCombo').value - 1].passone;
+			var checkPassTwo = teamList[document.getElementById('teamNameCombo').value - 1].passtwo;
 			
 			if(document.getElementById('passOneCombo').value == checkPassOne 
 						&& document.getElementById('passTwoCombo').value == checkPassTwo){
@@ -68,7 +71,7 @@ function validateLogin() {
 							alert('Success');
 				
 			} else {
-				alert('Failure');
+				alert('Incorrect Password');
 			}
 			
 
