@@ -37,13 +37,13 @@ if ($result->num_rows > 0){
 	
 	echo '</table>';
 	echo '<p>
-	<input type="button" onclick="location.href=\'propertyadmin.html\'" value="Add Property" />
+	<input type="button" onclick="location.href=\'propertyadmin.html\'" value="Back" />
 	</p>';
 	
 } else {
 	echo "0 results";
 	echo '<p>
-	<input type="button" onclick="location.href=\'propertyadmin.html\'" value="Add Property" />
+	<input type="button" onclick="location.href=\'propertyadmin.html\'" value="Back" />
 	</p>';
 }
 

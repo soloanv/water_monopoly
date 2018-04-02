@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Team Admin Page</title>
+    <title>Question Admin Page</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
@@ -16,35 +16,20 @@
 
 <body>
 
-<form action="teamSet.php" method="post">
-	<b>Add a New Team</b>
-	<p>Team Name:
-	<input type="text" name="name" size="30" value="" />
+<form action="questionSet.php" method="post">
+	<b>Add a New Question</b>
+	<p>Question:
+	<input type="text" name="question" size="30" value="" />
+	<p>Correct Answer:
+	<input type="text" name="correct" size="30" value="" />
+	<p>Wrong Answer One:
+	<input type="text" name="wrongone" size="30" value="" />
 	</p>
-	<p>Pass Word 1:
-	<select name="passone">
-				<option value="Pueblo">Pueblo</option>
-				<option value="Denver">Denver</option>
-				<option value="Boulder">Boulder</option>
-				<option value="Trinidad">Trinidad</option>
-     </select>
+	<p>Wrong Answer Two:
+	<input type="text" name="wrongtwo" size="30" value="" />
 	</p>
-	<p>Pass Word 2:
-	<select name="passtwo">
-				<option value="Pueblo">Pueblo</option>
-				<option value="Denver">Denver</option>
-				<option value="Boulder">Boulder</option>
-				<option value="Trinidad">Trinidad</option>
-     </select>
-	</p>
-	<p>Location (set 1 for default):
-	<input type="text" name="location" size="30" value="1" />
-	</p>
-	<p>Destination (set 1 for default):
-	<input type="text" name="destination" size="30" value="1" />
-	</p>
-	<p>Balance (1500 is monopoly default):
-	<input type="text" name="balance" size="30" value="1500" />
+	<p>Wrong Answer Three:
+	<input type="text" name="wrongthree" size="30" value="" />
 	</p>
 	<p>
 	<input type="submit" name="submit" value="Send" />
@@ -52,7 +37,7 @@
 </form>
 
 <p>
-<input type="button" onclick="location.href='teamGet.php'" value="View Teams" />
+<input type="button" onclick="location.href='questionGet.php'" value="View Questions" />
 </p>
 
 <p>

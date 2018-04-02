@@ -35,13 +35,13 @@ if ($result->num_rows > 0){
 	
 	echo '</table>';
 	echo '<p>
-	<input type="button" onclick="location.href=\'teamadmin.html\'" value="Add Team" />
+	<input type="button" onclick="location.href=\'teamadmin.html\'" value="Back" />
 	</p>';
 	
 } else {
 	echo "0 results";
 	echo '<p>
-	<input type="button" onclick="location.href=\'teamadmin.html\'" value="Add Team" />
+	<input type="button" onclick="location.href=\'teamadmin.html\'" value="Back" />
 	</p>';
 }
 
