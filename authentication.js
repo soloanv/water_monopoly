@@ -24,7 +24,7 @@ function fillTeams() {
 				//here is where the new option for the combobox is created for each team.
 				var newOption = document.createElement("option");
 				newOption.text = responseJSON[i];
-				newOption.value = i;
+				newOption.value = i+1;
 		
 				//apparently some browsers require the null and others don't.
 				//this try catch should fix that.
@@ -43,7 +43,7 @@ function fillTeams() {
 	};
 	
 	//Here is where the actual request happens
-	xmlhttp.open("GET", "teamNamesGet.php", true);
+	xmlhttp.open("GET", "teamNameGet.php", true);
 	xmlhttp.send();
 }
 
@@ -59,8 +59,8 @@ function validateLogin() {
 			
 			var teamList = responseJSON;
 			
-			var checkPassOne = teamList[document.getElementById('teamNameCombo').value].tPassOne;
-			var checkPassTwo = teamList[document.getElementById('teamNameCombo').value].tPassTwo;
+			var checkPassOne = teamList[document.getElementById('teamNameCombo').value - 1].tPassOne;
+			var checkPassTwo = teamList[document.getElementById('teamNameCombo').value - 1].tPassTwo;
 			
 			if(document.getElementById('passOneCombo').value == checkPassOne 
 						&& document.getElementById('passTwoCombo').value == checkPassTwo){
