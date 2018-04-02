@@ -1,21 +1,11 @@
 <?php
 
 //header('Content-Type: application/json');
+require_once('../sqliconnect.php');
 
-$servername = "localhost";
-$username = "root";
-$password = "monopolysql";
-$dbname = "monopoly";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error){
-	die("Connection failed: " . $conn->connect_error);
-}
 
 $sql = "SELECT * FROM properties";
 $result = $conn->query($sql);
-//$resultArray = array();
 if ($result->num_rows > 0){
 	
 	echo '<table align="left"
@@ -31,7 +21,6 @@ if ($result->num_rows > 0){
 	<td align="left"><b>Longitude</b></td></tr>';
 	
 	while($row = $result->fetch_assoc()){
-		//$resultArray[] = $row;
 		
 		echo '<tr><td align="left">' .
 		$row['id'] . '</td><td align="left">' .

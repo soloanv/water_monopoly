@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Property Admin Page</title>
+    <title>Team Admin Page</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
@@ -16,34 +16,35 @@
 
 <body>
 
-<form action="propertySet.php" method="post">
-	<b>Add a New Property</b>
-	<p>Property Name:
+<form action="teamSet.php" method="post">
+	<b>Add a New Team</b>
+	<p>Team Name:
 	<input type="text" name="name" size="30" value="" />
 	</p>
-	<p>Type:
-	<select name="type">
-               <option value="1">GO</option>
-               <option value="2">Normal Property</option>
-				<option value="3">Chance / Community Chest</option>
-				<option value="4">Free Space</option>
-				<option value="5">Jail</option>
+	<p>Pass Word 1:
+	<select name="passone">
+				<option value="Pueblo">Pueblo</option>
+				<option value="Denver">Denver</option>
+				<option value="Boulder">Boulder</option>
+				<option value="Trinidad">Trinidad</option>
      </select>
 	</p>
-	<p>Value:
-	<input type="text" name="value" size="30" value="" />
+	<p>Pass Word 2:
+	<select name="passtwo">
+				<option value="Pueblo">Pueblo</option>
+				<option value="Denver">Denver</option>
+				<option value="Boulder">Boulder</option>
+				<option value="Trinidad">Trinidad</option>
+     </select>
 	</p>
-	<p>Owner Team ID(set to -1 for unowned):
-	<input type="text" name="owner" size="30" value="-1" />
+	<p>Location (set 1 for default):
+	<input type="text" name="location" size="30" value="1" />
 	</p>
-	<p>Improvement(set to 1 for default):
-	<input type="text" name="improvement" maxlength="1" size="30" value="1" />
+	<p>Destination (set 1 for default):
+	<input type="text" name="destination" size="30" value="1" />
 	</p>
-	<p>Latitude:
-	<input type="text" name="lat" size="30" value="" />
-	</p>
-	<p>Longitude:
-	<input type="text" name="lon" size="30" value="" />
+	<p>Balance (1500 is monopoly default):
+	<input type="text" name="balance" size="30" value="1500" />
 	</p>
 	<p>
 	<input type="submit" name="submit" value="Send" />
@@ -51,7 +52,7 @@
 </form>
 
 <p>
-<input type="button" onclick="location.href='propertyGet.php'" value="View Properties" />
+<input type="button" onclick="location.href='teamGet.php'" value="View Teams" />
 </p>
 
 

@@ -10,28 +10,32 @@
 //Set a header to ensure the response is treated as JSON
 header('Content-Type: application/json');
 
-
+//DEPRICATED______________________________________________
 //Here is where I am storing all of the database details
 //For security, this should all be done in a different php file
 //in a different location from the actual website.
-$servername = "localhost";
-$username = "root";
-$password = "monopolysql";
-$dbname = "monopoly";
+//$servername = "";
+//$username = "";
+//$password = "";
+//$dbname = "";
 
 
 //Creating a new SQLi object
-$conn = new mysqli($servername, $username, $password, $dbname);
+//$conn = new mysqli($servername, $username, $password, $dbname);
 
 
 //If the connection fails, this block of code will echo the error 
-if ($conn->connect_error){
-	die("Connection failed: " . $conn->connect_error);
-}
+//if ($conn->connect_error){
+	//die("Connection failed: " . $conn->connect_error);
+//}
+//DEPRICATED______________________________________________
 
+
+//This is a more secure way to connect to the database.
+require_once('sqliconnect.php');
 
 //This is the actual sql statement to be executed
-$sql = "SELECT tName FROM teams";
+$sql = "SELECT name FROM teams";
 
 //Here is where the query is executed, and the response from the database is
 //stored in $result
@@ -51,7 +55,7 @@ if ($result->num_rows > 0){
 		//Here I am appending the "tName" value for each row.
 		//Again, I do not need to put in the "tName" key to recieve the 
 		//value. I am doing it only for practice and reference.
-		$nameArray[] = $row["tName"];
+		$nameArray[] = $row["name"];
 	} 
 } else {
 	echo "0 results";

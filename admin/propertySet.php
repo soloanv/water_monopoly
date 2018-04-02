@@ -45,17 +45,8 @@ if(isset($_POST['submit'])){
 	}
 	
 	if(empty($data_missing)){
-		//require_once('../sqliconnect.php');
-		$servername = "localhost";
-		$username = "root";
-		$password = "monopolysql";
-		$dbname = "monopoly";
-
-		$conn = new mysqli($servername, $username, $password, $dbname);
-
-		if (mysqli_connect_errno()){ 
-			die("Connection failed: " . $conn->connect_error);
-		}
+		require_once('../sqliconnect.php');
+		
 		
 		$query = "INSERT INTO properties (id, name, type, val, owner, improvement, lat, lon) 
 		VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";

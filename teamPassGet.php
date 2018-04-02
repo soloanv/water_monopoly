@@ -2,23 +2,28 @@
 
 header('Content-Type: application/json');
 
-$servername = "localhost";
-$username = "root";
-$password = "monopolysql";
-$dbname = "monopoly";
+//DEPRICATED________________________________________________
+//$servername = "localhost";
+//$username = "root";
+//$password = "monopolysql";
+//$dbname = "monopoly";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+//$conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($conn->connect_error){
-	die("Connection failed: " . $conn->connect_error);
-}
+//if ($conn->connect_error){
+	//die("Connection failed: " . $conn->connect_error);
+//}
+//DEPRICATED________________________________________________
 
-$sql = "SELECT tName, tPassOne, tPassTwo FROM teams";
+
+//This is a more secure way to connect to the database.
+require_once('sqliconnect.php');
+
+$sql = "SELECT name, passone, passtwo FROM teams";
 $result = $conn->query($sql);
 $nameArray = array();
 if ($result->num_rows > 0){
 	while($row = $result->fetch_assoc()){
-		//echo "tName: " . $row["tName"] . "<br>";
 		$nameArray[] = $row;
 	} 
 } else {
