@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<!--This is all going to be placed in the admin_page page and the team's page. This is all reference code-->
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--style doesn't matter. We can delete this-->
+		<style> 
+		#demo{
+		  text-align: center;
+		  font-size: 60px;
+		  margin-top:0px;
+		}
+		</style>
+		
+		<script>
+		
+			//Validates and enters time format for timer		
+			function enterTime(){
+				var time=document.getElementById("form1");
+				var hours=time.elements["hours"].value;
+				var mins=time.elements["mins"].value;
+				
+				// validate each entry
+				validateInput(hours);
+				validateInput(mins);				
+				//confirms the time entered after being validated
+				alert("Hours =  " + hours + "\nMinutes =  " + mins);
+				//now enter the data into the time
+				enterTimerLength(hours, mins);
+			}
+			
+			function validateInput(x){	// throw exceptions to force user to enter valid data types		
+				//if no entry
+				if(x==null || x===""){
+					throw new userException('Please enter values for Hours, and Minutes');
+					
+				// if valid data (integers)
+				}else if (parseInt(x)){
+				
+				// if invalid data
+				}else{ 
+					throw new userException("\"" + x +"\""  + ' is not a whole number. Please re-enter a whole number (example: 4, or 12)');
+					}
+			}
+			
+			function userException(message){ // part of data validation
+				this.message = message;
+				alert(message);
+			}
+			
+			function enterTimerLength(hours, mins){
+				var currentTime = new Date();
+				var endTime = new Date(currentTime.getTime() +(mins*60000) + (hours*3600000));
+				// display the end time. Delete this alert message in final draft
+				alert("TEST. The end time will be: " + endTime);
+				
+				
+				//start timer here
+//IS THIS NOT WORKING BECAUSE IT'S INSIDE THE FUNCTION? IT DOESN'T UPDATE THE COUNTDOWN
+// once the update part is corrected, copy this block of code onto the team's home page so they see the countdown as well.
+				// Update the count down every 1 second
+				var x = setInterval(function() {
+
+					// Find the distance between now an the count down date
+					var distance = endTime - currentTime;
+					
+					// Time calculations for days, hours, minutes and seconds
+					var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+					var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+					var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+					
+					// Output the result to the page
+					document.getElementById("endDisplay").innerHTML = days + "d " + hours + "h "
+					+ minutes + "m " + seconds + "s ";
+					
+					// If the count down is over, display "expired"
+					if (distance < 0) {
+						clearInterval(x);
+						document.getElementById("endDisplay").innerHTML = "EXPIRED";
+					}
+				}, 1000);
+// end of code needed for team's home page			
+			}
+			
+
+			
+// The rest of this script can be removed when the timer works properly. It's the reference code.
+
+			// Set the date we're counting down to
+			var countDownDate = new Date("April 27, 2018 15:37:25").getTime(); // date/time we're counting down to
+
+			// Update the count down every 1 second
+			var x = setInterval(function() {
+
+				// Get todays date and time
+				var now = new Date().getTime();
+				
+				// Find the distance between now an the count down date
+				var distance = countDownDate - now;
+				
+				// Time calculations for days, hours, minutes and seconds
+				var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+				
+				// Output the result in an element with id="demo"
+				document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+				+ minutes + "m " + seconds + "s ";
+				
+				// If the count down is over, write some text 
+				if (distance < 0) {
+					clearInterval(x);
+					document.getElementById("demo").innerHTML = "EXPIRED";
+				}
+			}, 1000);
+// End reference code that will be deleted in final draft			
+
+		</script>
+		
+	</head>
+	<body>
+		<p>Please enter the amount of time you want for your timer:<br>
+		<form id="form1">
+			Hours: <input type="text" name="hours" placeholder="Hours" id="hours"> <br>
+			Minutes: <input type="text" name="mins" placeholder="Minutes" id="mins"><br></p>
+		</form>
+		<button id="enterTime" onclick="enterTime()">Submit</button>
+		<p id="demo"></p>
+
+		<p id="endDisplay">End timer displayed here</p>
+	</body>
+</html>
