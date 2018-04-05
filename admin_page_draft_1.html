@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html land="en">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+		nav{
+			text-align: center;
+		}
+		</style>
+		
+		<script>
+		
+// REFER TO demoAJAXpost.js file
+// anything marked with "*****" is a comment that indicates that a link to the server/database is needed
+		
+		var teamAccount; // *****point to teamAccount in server 
+		var teamCurrency = 100; // ***** set to 100 for testing purposes. leave blank in final draft.
+								// teamCurrency will be called inside functions and point to the server teams
+		
+			function getSelectedTeam(){
+				teamAccount = document.getElementById("selectTeam").value;				
+				if(selectTeam.value == "null"){ // no team selected handling
+					document.getElementById("CurrentCurrency").innerHTML = "";
+					alert('select a team');
+					teamCurrency = null; // ensuring that the Admin doesn't edit any team's currency
+					return;
+				}
+				
+				//Test that you have the correct team. delete this alert in final draft
+				alert("TEST. You selected " + teamAccount); // link this to the team on the server
+				
+				// ***** teamAccount needs to point to the team account in the server
+				// ***** teamCurrency points to teamAccount's currency in the server
+				
+				// display teamCurrency in the HTML table
+				document.getElementById("CurrentCurrency").innerHTML = teamCurrency;
+			}
+			
+			function addCurrency(){
+				var currencyAdded = document.getElementById("amountAdded").value;
+				var numCheck = isNaN(document.getElementById("amountAdded").value); // isNaN check error (ex: '45a' is read as a number)
+				
+				//validate currencyAdded and parse to int
+				if(currencyAdded==null || currencyAdded===""){ //if no entry
+					alert("Amount added was left blank. Please enter an amount");
+				return;
+				}else if (parseInt(currencyAdded)){ //if successful parse
+				
+//IS-NAN ERROR HERE				
+				}else if (numCheck == true){ //if unsuccessful parse	
+					alert("Amount Added was not a whole number. Please re-enter a whole number \n(example: 100 or 450)");
+					return;					
+					}
+				
+				//parse teamCurrency to int
+				if(teamCurrency==null || teamCurrency===""){ // if teamCurrency = is blank/empty in the server
+					teamCurrency = 1500; // if the server has null/empty data, set it to 1500.
+					parseInt(teamCurrency); // sets this to an int value as prep to send to server
+
+					// ***** send new teamCurrency int value back to the database here. no code written for this step yet
+					
+				}else if (parseInt(teamCurrency)){ // if teamCurrency isn't null and can be set to an int, do nothing. you're fine here.
+				}else if (!parseInt(teamCurrency)){ //if unsuccessful parse	
+					alert("TEST. teamCurrency wasn't an int. Server Error"); // the value for the team's currency in the server isNaN. You done goofed.
+					return;
+				}
+				// now that teamCurrency isn't null and is an int...add it to currencyAdded
+				teamCurrency = +teamCurrency + +currencyAdded;
+				// ***** update server teamCurrency here 
+				document.getElementById("UpdatedCurrency").innerHTML = teamCurrency;
+			}
+		</script>
+		
+	</head>
+	<body>
+		<nav>
+			<h1>Administrative Page</h1><hr>
+		</nav>
+		<table border=5 align="center" cellspacing="10" cellpadding="20">
+			<caption>Team Currency</caption>
+			<tr>
+				<td>Team: 
+					<select id="selectTeam" onchange="getSelectedTeam();">
+					  <option value="null">Select a team</option> <!--if the team you want is the default box, the value is not set-->
+					  <option value="team1">Team 1</option>
+					  <option value="team2">Team 2</option>
+					  <option value="team3">Team 3</option>
+					  <option value="team4">Team 4</option>
+					  <option value="team5">Team 5</option>
+					  <option value="team6">Team 6</option>
+					  <option value="team7">Team 7</option>
+					  <option value="team8">Team 8</option>
+					</select></br>
+				
+				Current In-Game Currency: $<p id="CurrentCurrency" style="display:inline"></p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<!--add text field to enter amount changed-->
+					Amount added: $<input type="text" placeholder="Enter Amount" id="amountAdded"></br>
+					<button id="addCurrency" onclick="addCurrency()">Add Currency</button>
+				
+					Updated Currency: $<p id="UpdatedCurrency" style="display:inline"></p>
+				</td>
+			</tr>
+		</table>
+		<p>if 'amountAdded' starts with a number, but it's not an int (like: "400p"): the system breaks. </p>
+		
+		<hr>
+		<div>
+			<p id="timer" align="center">Set Timer</p>
+			(place timer code here in final draft)
+		</div>
+	</body>
+</html>
+
+
+
+
