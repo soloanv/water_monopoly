@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Question Admin Page</title>
+    <title>Chance Admin Page</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
@@ -16,22 +16,21 @@
 
 <body>
 
-<form action="questionSet.php" method="post">
-	<b>Add a New Question</b>
-	<p>Question:
-	<input type="text" name="question" size="30" value="" />
+<form action="chanceSet.php" method="post">
+	<b>Add a New Chance Card</b>
+	<p>Card Text:
+	<input type="text" name="chance" size="30" value="" />
 	</p>
-	<p>Correct Answer:
-	<input type="text" name="correct" size="30" value="" />
+	<p>Type:
+	<select name="type">
+               <option value="1">Add/Subtract Money</option>
+               <option value="2">Advance/Go Back Spaces</option>
+				<option value="3">Go to Jail</option>
+				<option value="4">Get out of Jail Free</option>
+     </select>
 	</p>
-	<p>Wrong Answer One:
-	<input type="text" name="wrongone" size="30" value="" />
-	</p>
-	<p>Wrong Answer Two:
-	<input type="text" name="wrongtwo" size="30" value="" />
-	</p>
-	<p>Wrong Answer Three:
-	<input type="text" name="wrongthree" size="30" value="" />
+	<p>Result:
+	<input type="text" name="result" size="30" value="" />
 	</p>
 	<p>
 	<input type="submit" name="submit" value="Send" />
@@ -39,7 +38,7 @@
 </form>
 
 <p>
-<input type="button" onclick="location.href='questionGet.php'" value="View Questions" />
+<input type="button" onclick="location.href='chanceGet.php'" value="View Chance Cards" />
 </p>
 
 <p>

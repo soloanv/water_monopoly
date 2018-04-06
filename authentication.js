@@ -68,10 +68,11 @@ function validateLogin() {
 			if(document.getElementById('passOneCombo').value == checkPassOne 
 						&& document.getElementById('passTwoCombo').value == checkPassTwo){
 							
-							alert('Success');
+							sessionStorage.teamid = document.getElementById('teamNameCombo').value;
+							window.location.replace('map-page.html');
 				
 			} else {
-				alert('Incorrect Password');
+				alert('Incorrect Login Details');
 			}
 			
 
