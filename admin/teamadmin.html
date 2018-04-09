@@ -14,8 +14,15 @@
     </style>
 </head>
 
-<body>
+<body onload="fillTeams()">
+<p>
+<input type="button" onclick="location.href='teamGet.php'" value="View Teams" />
+</p>
 
+<p>
+<input type="button" onclick="location.href='index.html'" value="Admin Home" />
+</p>
+<hr/>
 <form action="teamSet.php" method="post">
 	<b>Add a New Team</b>
 	<p>Team Name:
@@ -66,14 +73,81 @@
 	<input type="submit" name="submit" value="Send" />
 	</p>
 </form>
-
+<hr/>
 <p>
-<input type="button" onclick="location.href='teamGet.php'" value="View Teams" />
+<b>Edit a team<b>
+<select id="nameselect">
+	<option selected value="-1">Select team name...</option>			
+</select>
+<p>
+	<input type="button" name="edit" value="Edit" onclick="editGet()"/>
 </p>
 
-<p>
-<input type="button" onclick="location.href='index.html'" value="Admin Home" />
+<form id="hiddenform" action="teamUpdate.php" method="post">
+
+	<p hidden>
+	<input type="text" name="editid" id="editid" size="30" value="" />
+	</p>
+	
+	<p>Team Name:
+	<input type="text" name="editname" id="editname" size="30" value="" />
+	</p>
+	<p>Pass Word 1:
+	<select name="editpassone" id="editpassone">
+				<option value="Denver">Denver</option>
+				<option value="Colorado Springs">Colorado Springs</option>
+				<option value="Aurora">Aurora</option>
+				<option value="Fort Collins">Fort Collins</option>
+				<option value="Lakewood">Lakewood</option>
+				<option value="Pueblo">Pueblo</option>
+				<option value="Boulder">Boulder</option>
+				<option value="Trinidad">Trinidad</option>
+				<option value="Grand Junction">Grand Junction</option>
+				<option value="Greeley">Greeley</option>
+				<option value="Loveland">Loveland</option>
+				<option value="Walsenburg">Walsenburg</option>
+     </select>
+	</p>
+	<p>Pass Word 2:
+	<select name="editpasstwo" id="editpasstwo">
+				<option value="Denver">Denver</option>
+				<option value="Colorado Springs">Colorado Springs</option>
+				<option value="Aurora">Aurora</option>
+				<option value="Fort Collins">Fort Collins</option>
+				<option value="Lakewood">Lakewood</option>
+				<option value="Pueblo">Pueblo</option>
+				<option value="Boulder">Boulder</option>
+				<option value="Trinidad">Trinidad</option>
+				<option value="Grand Junction">Grand Junction</option>
+				<option value="Greeley">Greeley</option>
+				<option value="Loveland">Loveland</option>
+				<option value="Walsenburg">Walsenburg</option>
+     </select>
+	</p>
+	<p>Location (set 1 for default):
+	<input type="text" name="editlocation" id="editlocation" size="30" value="" />
+	</p>
+	<p>Destination (set 1 for default):
+	<input type="text" name="editdestination" id="editdestination" size="30" value="" />
+	</p>
+	<p>Balance (1500 is monopoly default):
+	<input type="text" name="editbalance" id="editbalance" size="30" value="" />
+	</p>
+	<p>
+	<input type="submit" name="submit" id="submit" value="Send" />
+	</p>
+</form>
+
 </p>
+
+
+
+
+<hr/>
+
+
+<br/>
+
 
 
 

@@ -2,24 +2,21 @@
 //header('Content-Type: application/json');
 
 //you must send addbalance= and id=
-$addBalance = $_POST['addbalance'];
+$newDest = $_POST['destination'];
 $teamID = $_POST['id'];
 
 
 
 
 require_once('sqliconnect.php');
-$query = "UPDATE teams SET balance = balance + " . $addBalance . " WHERE id = " . $teamID;
+$query = "UPDATE teams SET destination = " . $newDest . " WHERE id =" . $teamID;
 
 if ($conn->query($query) === TRUE) {
-    echo "Balance updated successfully";
+    echo "Destination updated successfully";
 } else {
     echo "Error updating record: " . $conn->error;
 }
 
 $conn->close();
 	
-	
-
-
 ?>

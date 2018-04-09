@@ -68,25 +68,8 @@
 
 
     </style>
-    <script>
-        var doubleCount = 0;
-        function rollDice(){
-            var dice1 = document.getElementById("dice1");
-            var dice2 = document.getElementById("dice2");
-            var status = document.getElementById("status");
-            var d1 = Math.floor(Math.random() * 6) + 1;
-            var d2 = Math.floor(Math.random() * 6) + 1;
-            var total = d1 + d2;
-            dice1.innerHTML = d1;
-            dice2.innerHTML = d2;
-            status.innerHTML = "Move " + total + " spaces";
-            if(d1 == d2){
-                status.innerHTML = "DOUBLES! Roll again!";
-            }
-        }
-    </script>
 </head>
-<body>
+<body onload="getTeams(),getProperties(),checkQA()">
         <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -106,11 +89,12 @@
 <div id="footer">
     <h3 id="status" style="clear:left"></h3>
     <div class="container">
-    <div id="dice1" class="dice">0</div>
-    <div id="dice2" class="dice">0</div>
+    <div id="dice1" class="dice" hidden>0</div>
+    <div id="dice2" class="dice" hidden>0</div>
     <br class="clear">
     </div>
-    <button onclick="rollDice()" type="button" class="btn btn-primary">ROLL DICE</button>
+    <button style="visibility:hidden" id="dicebutton" onclick="rollDice()" type="button" class="btn btn-primary">ROLL DICE</button>
+	<button style="visibility:hidden" id="herebutton" onclick="imHere()" type="button" class="btn btn-primary">I'm Here!</button>
 </div>
 
 <script>
@@ -628,6 +612,8 @@ map.on('load', function() {
 map.addControl(new mapboxgl.NavigationControl());
 
 </script>
+<script src="logincheck.js"></script>
+<script src="map.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
