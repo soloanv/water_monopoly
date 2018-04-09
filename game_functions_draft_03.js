@@ -329,6 +329,7 @@ function chance(){
 	else if(randomChanceType == 3){
 		currentLocation = jailLocation; // UPDATE DATABASE currentLocation
 		destination = jailLocation;// UPDATE DATABASE destination
+		questionAnswerValue = 2;
 		// this 'else-if' is done
 	}
 	else if(randomChanceType == 4){ 
