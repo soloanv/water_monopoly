@@ -37,7 +37,12 @@ function onPageLoad(){ // functions like the 'main' method in traditional coding
 		teamID = sessionStorage.TeamID; // DATABASE CONNECTION TO TeamID
 	// end try catch
 // verify teamID is true
-	if(teamID = true){
+	if(!teamID){ // return to login page.
+		window.location.replace{
+			'index.html'
+		}
+	}
+	else{
 		// connect all variables to database here
 		gameTimer = // time remaining
 		questionAnswerValue = // DATABASE CONNECTION TO Team's QA
@@ -48,11 +53,6 @@ function onPageLoad(){ // functions like the 'main' method in traditional coding
 		getOutOfJailFree = // DATABASE CONNECTION HERE. 0 or 1, true false, etc. just need the connection made here
 		destination = // DATABASE CONNECTION HERE
 		jailLocation = // DATABASE CONNECTION HERE
-	}
-	else(!teamID){ // return to login page.
-		window.location.replace{
-			'index.html'
-		}
 	}
 	
 // out of time check
@@ -112,7 +112,7 @@ function onPageLoad(){ // functions like the 'main' method in traditional coding
 // ONE LOGIC ERROR NEEDED TO BE RESOLVED (jail). OTHERWISE DONE (4/7/18)
 function checkStationType(){
 	
-	var stationType = 	// get currentLocation's stationType. // DATABASE INFORMATION NEEDED HERE
+	var stationType = 	// get currentLocation's stationType. // DATABASE INFORMATION NEEDED HERE 	reference generalPropertyGet
 	
 	if (stationType = 1){ // GO type
 		// if-pass-go function will have already been handled
@@ -188,7 +188,7 @@ function checkStationType(){
 function askQuestion() {	// retrieve a random question
 	var randomQ = getRandomQuestion(); // selects the random question
 	// now grab the question and answers from the database
-	// display  randomQ question here in GUI
+	// display  randomQ question here in GUI									reference authentication.js line 4 "fill teams"
 	
 	var rightAns = document.getElementById('rightAnswer').checked; // verify the getElementById value is the same in the HTML doc for all answers
 	var wrong1 = document.getElementById('wrongOne').checked;
@@ -206,7 +206,7 @@ function askQuestion() {	// retrieve a random question
 	else if(x = 3){
 		// display: wrong2, wrong1, rightAns, wrong3
 	}
-	else(x = 4){
+	else{ // x = 4
 		// display: wrong3, wrong2, wrong1, rightAns
 	}		
 	
@@ -231,7 +231,7 @@ function getRandomQuestion(){
 	
 }
 // DONE WITH CODING (4/7/18)
-function getNumOfQuestions(){ // gets the max # of questions from DB
+function getNumOfQuestions(){ // gets the max # of questions from DB GENERALQUESTIONGET .PHP FILE. do AJAX request here
 	var numberOfQuestions = 	// DATABASE CONNECTION NEEDED maxID for questions
 	return numberOfQuestions;
 }
@@ -252,7 +252,7 @@ function checkPassedGo(newDest){
 	}
 }
 // DONE WITH CODING (4/7/18)
-function getNumberOfProperties(){
+function getNumberOfProperties(){ // like GENERALPROPERTIESGET .PHP FILE. do AJAX request here
 	var maxStationNumber = // max num of properties // DATABASE CONNECTION NEEDED HERE
 	return maxStationNumber; 
 }
