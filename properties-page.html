@@ -6,6 +6,7 @@
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
         body { margin:0; padding:0;}
         h1 {
@@ -13,7 +14,120 @@
         }
     </style>
     <script>
-        
+var propertyStations = {
+	"stations":[
+		{
+			"id" : 0,
+			"name" : "Go",
+			"lat" : 38.26338820960,
+			"long" : -104.60812617700,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 0
+		},
+		{
+			"id" : 1,
+			"name" : "Mediterranean Avenue",
+			"lat" : 38.26344927810,
+			"long" : -104.60895582800,
+			"value" : 60,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 1
+		},
+		{
+			"id" : 2,
+			"name" : "Community Chest",
+			"lat" : 38.26360899660,
+			"long" : -104.60929056400,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 2
+		},
+		{
+			"id" : 3,
+			"name" : "Baltic Avenue",
+			"lat" : 38.26382985640,
+			"long" : -104.60957229700,
+			"value" : 60,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 1
+		},
+		{
+			"id" : 4,
+			"name" : "Oriental Avenue",
+			"lat" : 38.26406570320,
+			"long" : -104.60989639000,
+			"value" : 100,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 1
+		},
+		{
+			"id" : 5,
+			"name" : "Chance",
+			"lat" : 38.26421538220,
+			"long" : -104.61027530500,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 2
+		},
+		{
+			"id" : 6,
+			"name" : "Vermont Avenue",
+			"lat" : 38.26444899970,
+			"long" : -104.61056653000,
+			"value" : 100,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 1
+		},
+		{
+			"id" : 7,
+			"name" : "Connecticut Avenue",
+			"lat" : 38.26459496980,
+			"long" : -104.61094511100,
+			"value" : 100,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 1
+		},
+		{
+			"id" : 8,
+			"name" : "Jail",
+			"lat" : 38.26473740360,
+			"long" : -104.61132583100,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 3
+		},
+		{
+			"id" : 9,
+			"name" : "Go To Jail",
+			"lat" : 38.26483562310,
+			"long" : -104.61173440800,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 4
+		},
+		{
+			"id" : 10,
+			"name" : "Free Parking",
+			"lat" : 38.26501526570,
+			"long" : -104.61209046800,
+			"value" : 0,
+			"improvement" : 0,
+			"owner" : -1,
+			"type" : 3
+		}
+	]
+}
     </script>
 </head>
 <body>
@@ -21,46 +135,87 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">CWOA</a>
+                <a class="navbar-brand" href="index.html">Water </a>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                   <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="map-page.html">Home</a>
-                    <a class="nav-item nav-link" href="properties-page.html">Properties</a>
+                    <a class="nav-item nav-link active" href="map-page.html">Home</a>
+                    <a class="nav-item nav-link" href="#">Properties <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="bank-page.html">Bank</a>
                     <a class="nav-item nav-link" href="map-page.html">Map</a>
                   </div>
                 </div>
               </nav>
     <h1>PROPERTIES</h1>
+
+		  <ul class="nav nav-tabs nav-justified">
+				<li class="nav-item">
+					<a class="nav-link active" data-toggle="tab" href="#ownedProps" role="tab">Owned</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#vacantProps" role="tab">Vacant</a>
+				</li>
+			</ul>
+
+			<!-- Tab panels -->
+<div class="tab-content card">
+		<!--Panel 1-->
+		<div class="tab-pane fade in show active" id="ownedProps" role="tabpanel">
+			<div class="card-deck">
+				<div class="card">
+				  <div class="card-body">
+					<h5 class="card-title" id="cardTitle" style="text-align:center; background-color:#4286f4; color:white; padding:5px;"></h5>
+					<p class="card-text" style="text-align:center" id="rent"></p>
+					<p class="card-text">
+						<div style="float:left">With 1 House <br>With 2 Houses <br>With 3 Houses</div>
+						<div style="float:right" id="rightProp"></div>
+					</p>
+				  </div>
+				  <div class="card-footer" style="text-align:center">
+					<p>Each Improvement = $150</p>
+					<button type="button" class="btn btn-info" onclick="buyImprovement();">Buy Improvement</button>
+					<button type="button" class="btn btn-danger" onclick="sellProp">Sell Property</button>
+				  </div>
+				</div>
+			</div>
+		</div>
+		<!--/.Panel 1-->
+		<!--Panel 2-->
+		<div class="tab-pane fade" id="vacantProps" role="tabpanel">
+			<div class="card-deck">
+				<div class="card">
+				  <div class="card-body">
+					<h5 class="card-title" id="cardTitle" style="text-align:center; background-color:rgb(132, 206, 132); color:white; padding:5px;">Hello</h5>
+					<p class="card-text" style="text-align:center" id="rent"></p>
+					<p class="card-text">
+						<div style="float:left">With 1 House <br>With 2 Houses <br>With 3 Houses</div>
+						<div style="float:right" id="rightProp"></div>						
+					</p>
+					</div>
+				  <div class="card-footer" style="text-align:center">
+					<p>Vacant</p>
+				  </div>
+				</div>
+			</div>
+		</div>
+		<!--/.Panel 2-->
+	</div>	  
+
+<script>
+
+    for(var i=0;i<propertyStations.stations.length;i++){
+    var stationTitle = document.getElementById("cardTitle");
+    stationTitle.innerHTML = propertyStations.stations[3].name;
     
-    <div class="card-deck">
-        <div class="card">
-          <img class="card-img-top" src="gcb.jpg" alt="Card image cap">
-          <div class="card-body">
-          <h5 class="card-title">General Classroom Building</h5>
-          <p class="card-text" style="text-align:center">Rent: $100</p>
-          <p class="card-text"><div style="float:left">With 1 House <br>With 2 Houses <br>With 3 Houses</p></div>
-          <div style="float:right">$200 <br>$300 <br>$400</div>
-          </div>
-            <div class="card-footer">
-                <small class="text-muted">Owned</small>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="library.png" alt="Card image cap">
-            <div class="card-body">
-            <h5 class="card-title">Library</h5>
-            <p class="card-text" style="text-align:center">Rent: $150</p>
-            <p class="card-text"><div style="float:left">With 1 House <br>With 2 Houses <br>With 3 Houses</p></div>
-            <div style="float:right">$300 <br>$400 <br>$500</div>
-            </div>
-              <div class="card-footer">
-                  <small class="text-muted">Vacant</small>
-            </div>
-          </div>
-    </div>
+    var stationRent = document.getElementById("rent");
+    stationRent.innerHTML = 'Rent: $'+propertyStations.stations[3].value;
 
+    var withImprovements = document.getElementById("rightProp");
+    withImprovements.innerHTML = '$'+propertyStations.stations[3].value * 2 + '<br>' + 
+                                  '$'+propertyStations.stations[3].value * 2.5 + '<br>' +
+                        	       '$'+propertyStations.stations[3].value * 2.75;
+    }
 
+</script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
