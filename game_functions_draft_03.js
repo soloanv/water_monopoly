@@ -6,12 +6,6 @@
 		refer to chance() function below for details
 */
 
-/*notes:
-if(currentLocation = destination) 
-	will this return true if they both equal the same number? 
-	or not because they may both point to different memory locations?
-*/
-
 // I need these global variables for when functions call each other
 var teamID;
 var questionAnswerValue = // reference database "QA" for 2=true, 1=false. initially this will equal 1 in database
@@ -23,7 +17,7 @@ var jailLocation; // must be a property number (example: "GO" is 1)
 var gameTimer; //time remaining
 var teamCurrency;
 
-
+// last edit (4/7/18). DONE
 function onPageLoad(){ // functions like the 'main' method in traditional coding
 
 		teamID = sessionStorage.TeamID; // DATABASE CONNECTION TO TeamID
@@ -91,7 +85,7 @@ function onPageLoad(){ // functions like the 'main' method in traditional coding
 }
 
 
-// DONE (4/7/18)
+// DONE. last edit: (4/9/18)
 function checkStationType(){
 	
 	var stationType = 	// get currentLocation's stationType. // DATABASE INFORMATION NEEDED HERE 	reference generalPropertyGet
@@ -166,7 +160,7 @@ function checkStationType(){
 	}
 }
 
-// AS DONE AS CAN BE. needs GUI relationship set up correctly (4/7/18)
+// AS DONE AS CAN BE. needs GUI relationship set up correctly	last edit: (4/9/18)
 function askQuestion() {	// returns a true or false statement
 	var randomQ = getRandomQuestion(); // selects the random question
 	// now grab the question and answers from the database
@@ -208,7 +202,7 @@ function askQuestion() {	// returns a true or false statement
 	}		
 	return playerAnswer;
 }
-// DONE WITH CODING (4/7/18)
+// DONE. last edit: (4/7/18)
 function getRandomQuestion(){
 	
 	var maxQ = getNumOfQuestions();
@@ -216,14 +210,14 @@ function getRandomQuestion(){
 	return x; // sends the random question number
 	
 }
-// DONE WITH CODING (4/7/18)
+// DONE. last edit: (4/7/18)
 function getNumOfQuestions(){ // gets the max # of questions from DB GENERALQUESTIONGET .PHP FILE. do AJAX request here
 	var numberOfQuestions = 	// DATABASE CONNECTION NEEDED maxID for questions
 	return numberOfQuestions;
 }
 
 
-// DONE WITH CODING (4/7/18)
+// DONE. last edit: (4/7/18)
 function checkPassedGo(newDest){
 	var x = newDest; // current number/destination after dice roll
 	var maxStationNumber = getNumberOfProperties();
@@ -237,14 +231,14 @@ function checkPassedGo(newDest){
 		return x;
 	}
 }
-// DONE WITH CODING (4/7/18)
+// DONE. last edit: (4/7/18)
 function getNumberOfProperties(){ // like GENERALPROPERTIESGET .PHP FILE. do AJAX request here
 	var maxStationNumber = // max num of properties // DATABASE CONNECTION NEEDED HERE
 	return maxStationNumber; 
 }
 
 
-// DONE WITH CODING (4/7/18) needs GUI interaction for proper setup
+// DONE. last edit (4/9/18) needs GUI interaction for proper setup
 function buyProperty(playerLocation){
 	
 	var propertyCost = // DATABASE CONNECTION HERE to propertyCost based on currentLocation
@@ -272,7 +266,7 @@ function buyProperty(playerLocation){
 }
 
 
-// DONE (4/9/18)
+// DONE. last edit: (4/9/18)
 function payRent(playerAnswer){
 	// Find team that owns property.
 	// Update their ^ currency and teamCurrency
@@ -316,7 +310,7 @@ function payRent(playerAnswer){
 
 
 
-// MORE INFORMATION NEEDED REGARDING THIS FUNCTIONALITY (chance type values 1 and 2) (4/7/18)
+// MORE INFORMATION NEEDED REGARDING THIS FUNCTIONALITY (chance type values 1 and 2) last edit: (4/7/18)
 function chance(){
 	var randomC = getRandomChance(); // selects the random chance number
 		// now grab the statement and type from database
@@ -341,7 +335,7 @@ function chance(){
 		getOutOfJailFree = true; // UPDATE DATABASE FOR THIS VARIABLE stating they now have that card
 	}
 }
-// DONE WITH CODING (4/7/18)
+// DONE. last edit: (4/7/18)
 function getRandomChance(){
 	
 	var maxC = getNumOfChance(); // finds total number of questions
@@ -349,14 +343,14 @@ function getRandomChance(){
 	return c; // sends the random question number
 	
 }
-// DONE WITH CODING (4/7/18)
+// DONE. last edit: (4/7/18)
 function getNumOfChance(){
 	var numberOfChance = // DATABASE CONNECTION NEEDED HERE
 	return numberOfChance;
 }
 
 
-// DONE WITH CODING. Function never called (4/7/18)
+// DONE. Function never called. last edit: (4/7/18)
 function goToJail(){
 	currentLocation = jailLocation; // database reference here for jail location
 	destination = jailLocation;
