@@ -46,8 +46,6 @@ function checkQA(){
 			
 		} else {
 			if(teamList[sessionStorage.teamid - 1].destination == teamList[sessionStorage.teamid - 1].location){
-				
-				alert("roll");
 				document.getElementById("dicebutton").style.visibility = "visible";
 			} else {
 				alert("imhere");
