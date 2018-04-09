@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 require_once('sqliconnect.php');
 
-$sql = "SELECT name, passone, passtwo FROM teams";
+$sql = "SELECT name, balance FROM teams";
 $result = $conn->query($sql);
 $nameArray = array();
 if ($result->num_rows > 0){

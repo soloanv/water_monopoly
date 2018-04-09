@@ -1,3 +1,5 @@
+var balance;
+
 function addBalance() {
 	
 	xmlhttp = new XMLHttpRequest();
@@ -19,21 +21,7 @@ function addBalance() {
 	
 	
 	//Here is where the actual request happens
-	xmlhttp.open("POST", "balanceTeamAdd.php", true);
+	xmlhttp.open("POST", "specificTeamGet.php", true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xmlhttp.send("id=5&addbalance=200");
-	
-	
-	
-	
-	
-	
-	
-	xmlhttp.send("id=" + ID + "&addbalance=" + addBalance);
-	
-	
-	
-	
-	
-	
+	xmlhttp.send("id=" + ID);
 };

@@ -69,7 +69,7 @@ function validateLogin() {
 						&& document.getElementById('passTwoCombo').value == checkPassTwo){
 							
 							sessionStorage.teamid = document.getElementById('teamNameCombo').value;
-							window.location.replace('map-page.html');
+							window.location = "map-page.html";
 				
 			} else {
 				alert('Incorrect Login Details');

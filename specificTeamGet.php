@@ -4,10 +4,10 @@ header('Content-Type: application/json');
 require_once('sqliconnect.php');
 
 //you must send id=
-$teamID = $_POST['id'];
+$teamID = $_GET['id'];
 
 
-$sql = "SELECT * FROM teams WHERE id = " . $teamID;
+$sql = "SELECT * FROM teams WHERE id=" . $teamID;
 $teamArray = array();
 $result = $conn->query($sql);
 if ($result->num_rows > 0){
