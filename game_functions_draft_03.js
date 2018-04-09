@@ -2,9 +2,6 @@
 // anywhere a database connection is needed, the word "DATABASE" will be displayed in all caps with a description
 
 /*Problems needed to be addressed:
-	-Station type (5) has no way of getting out of jail.
-		refer to "stationType = 5" notes in the checkStationType function.
-		
 	-More information needed for chance Type values 1 and 2
 		refer to chance() function below for details
 	
@@ -37,10 +34,8 @@ function onPageLoad(){ // functions like the 'main' method in traditional coding
 		teamID = sessionStorage.TeamID; // DATABASE CONNECTION TO TeamID
 	// end try catch
 // verify teamID is true
-	if(!teamID){ // return to login page.
-		window.location.replace{
-			'index.html'
-		}
+	if(!sessionStorage==teamID){ // return to login page.
+		window.location = 'index.html';
 	}
 	else{
 		// connect all variables to database here
@@ -66,28 +61,23 @@ function onPageLoad(){ // functions like the 'main' method in traditional coding
 		alert("See game administrator to purchase additional funds");
 		return;
 	}	
-
-// if they're in jail	
-	if(currentLocation = jailLocation){ // need to know jail location
-		checkStationType(); // this will direct them to the inJail scenario
-	}
-
 // if everything above checks out, begin the flowchart.
 
 	// check questionAnswerValue and location
-	if(questionAnswerValue = 1 /*false*/){ 
+	if(questionAnswerValue == 1 /*false*/){ 
 		
 		// check location here
-		if(currentLocation = destination){
+		if(currentLocation == destination){
 			// display map with diceRoll option. I'll need to automatically lead to the html file here
 			diceRoll = // Link to Map page dice roll variable here		This should be done quickly, but do we want to update the diceRoll in the database for any reason?
+			
 			var newDestination = destination + diceRoll;	
 			destination = checkPassedGO(newDestination);
 			// UPDATE DESTINATION IN DATABASE HERE
 			// now destination != currentLocation  &&  questionAnswerValue = 1
 			onPageLoad(); // reload the page after the data has been changed
 		}			
-		else if(destination != currentLocation){
+		else{
 			// display map with the "I'm here" button. I'll need to automatically lead to the html file here
 			// once they click the I'm here button
 			currentLocation = destination; // UPDATE DATABASE HERE for currentLocation
@@ -96,7 +86,7 @@ function onPageLoad(){ // functions like the 'main' method in traditional coding
 		}
 		
 	}
-	else if(questionAnswerValue = 2 /*true*/){		
+	else if(questionAnswerValue == 2 /*true*/){		
 		checkStationType();
 		questionAnswerValue = 1; // UPDATE DATABASE HERE for "QA"
 		onPageLoad();
@@ -104,7 +94,7 @@ function onPageLoad(){ // functions like the 'main' method in traditional coding
 	
 	else{
 		alert("Error: Check questionAnswerValue variable in server");
-		onPageLoad();
+		onPageLoad(); // <script src = "logincheck.js"></script>
 	}
 }
 
@@ -114,13 +104,13 @@ function checkStationType(){
 	
 	var stationType = 	// get currentLocation's stationType. // DATABASE INFORMATION NEEDED HERE 	reference generalPropertyGet
 	
-	if (stationType = 1){ // GO type
+	if (stationType == 1){ // GO type
 		// if-pass-go function will have already been handled
 		// do nothing.
 		return;
 	}
 	
-	else if (stationType = 2){ // property type
+	else if (stationType == 2){ // property type
 		var propertyOwned = // DATABASE PROPERTY OWNED INFORMATION NEEDED HERE true or false?
 		if(propertyOwned == true){ // different if statement developed
 			askQuestion(); // updates playerAnswer variable
@@ -136,49 +126,39 @@ function checkStationType(){
 			}
 		}
 	}
-	
-	else if (stationType = 5){ // needs adjustments to logic
+	else if (stationType == 5){ // Players need to answer a question AND pay a fine
 		var jailFine = 200; // how much will the fine be? flowchart showed no fine option? Is it only questions?
-		alert("You have to answer a question correctly, or pay the fine"); // is this right? did they have to answer AND pay the fine?
-		
-		/*there may be an issue with this station. 
-		Station type doesn't change unless your currentLocation changes. 
-		Even if you get out of jail from paying the fine/answering questions,
-		you'll still be at the jail location, which will indicate that you're still "in jail."
-		life in prison?		
-		*/
-		while(stationType = 5){
-			// GUI display 2 buttons: answerQuestion or pay fine;
-			var jailAnswer = // either answerQuestion(1) or Pay Fine(2)
-			if (jailAnswer = answerQuestion/*1*/){
-				askQuestion(); // will update playerAnswer
-				if(playerAnswer = "correct"){
-					alert("You got out of jail!");
-					playerAnswer = "null";
-					stationType = 4; // this won't work. Problem described about this 'while' statement.
+		while(stationType == 5){
+			
+			var jailQuestionAnswered = 1; // false
+			while(jailQuestionAnswered == 1){
+				alert("You must answer a question correctly and pay a fine to get out of jail.");
+				if(playerAnswer == "null"){ // incorrect
+					askQuestion(); // changes playerAnswer to "correct" or "null" <--incorrect
 				}
-				else if(playerAnswer = "null"/*or incorrect*/){
-					stationType = 5;
+				if(playerAnswer == "correct"){
+					alert("Correct! Now you only have to pay the fine. The amount is: " + jailFine);
+					jailQuestionAnswered = 2; // exits this jailQuestionAnswered while loop
 				}
 			}
-				
-			if(jailAnswer = pay the fine/*2*/){
-				if(teamCurrency < jailFine){
-					alert("You do not have the funds to pay the fine. You must answer the question");
-				}
-				else if(teamCurrency >= jailFine){
-					teamCurrency = teamCurrency - jailFine;
-					alert("You paid the fine and are not out of jail");
-					stationType = 4; // this won't work. Problem described about this 'while' statement.
-				}
-			}	
+			// button to confirm payment
+			if(teamCurrency < jailFine){
+					alert("You do not have the funds to pay the fine. Please see CWOA administrator for additional funds");
+					return; // this should redirect you to the top of the "while(stationType == 5)"
+			}
+			if(teamCurrency >= jailFine){
+					teamCurrency = teamCurrency - jailFine; // UPDATE DATABASE HERE for teamCurrency
+					alert("You have paid the fine and are out of jail");
+			}
+			stationType = 4; // exits the while loop
 		}
 	}
-	else if (stationType = 3){ // chance
+	
+	else if (stationType == 3){ // chance
 		chance();
 		return;
 	}
-	else if (stationType = 4){ // freeParking
+	else if (stationType == 4){ // freeParking
 		// do nothing
 		return;
 	}
@@ -197,16 +177,16 @@ function askQuestion() {	// retrieve a random question
 	
 	// this random answer setup is ugly but it works
 	var x = Math.floor(Math.random() * 4 + 1); // selects a random number between 1 and 4
-	if(x = 1){
+	if(x == 1){
 		// display: rightAns, wrong1, wrong2, wrong3	 // these displays will need GUI framework
 	} 
-	else if(x = 2){
+	else if(x == 2){
 		// display: wrong1, rightAns, wrong2, wrong3 
 	}
-	else if(x = 3){
+	else if(x == 3){
 		// display: wrong2, wrong1, rightAns, wrong3
 	}
-	else{ // x = 4
+	else{ // x == 4
 		// display: wrong3, wrong2, wrong1, rightAns
 	}		
 	
@@ -290,7 +270,7 @@ function payRent(){
 	// Find team that owns property.
 	// Update their ^ currency and teamCurrency
 	var rent = // DATABASE CONNECTION NEEDED for property rent amount
-	if (playerAnswer = correct){
+	if (playerAnswer == correct){
 		// offer discount?
 		teamCurrency = teamCurrency - rent;
 		propertyOwnerCurrency = propertyOwnerCurrency + rent; // DATABASE CONNECTION to update propertyOwnerCurrency
@@ -313,19 +293,19 @@ function chance(){
 	var randomChanceType = // DATABASE REFERENCE HERE. chance TYPE based on the number stored in 'randomC'
 
 	var randomChanceType = Math.floor(Math.random() * 4 + 1); // selects a random number between 1 and 4
-	if(randomChanceType = 1){
+	if(randomChanceType == 1){
 		// change currency...to what?
 // I need more details about this.
 	}
-	else if(randomChanceType = 2){
+	else if(randomChanceType == 2){
 		// change location to a new location.
 	}
-	else if(randomChanceType = 3){
+	else if(randomChanceType == 3){
 		currentLocation = jailLocation; // UPDATE DATABASE currentLocation
 		destination = jailLocation;// UPDATE DATABASE destination
 		// this 'else-if' is done
 	}
-	else if(randomChanceType = 4){ 
+	else if(randomChanceType == 4){ 
 		getOutOfJailFree = true; // UPDATE DATABASE FOR THIS VARIABLE stating they now have that card
 	}
 }
