@@ -38,17 +38,15 @@ function getProperties(){
 
 
 function checkQA(){
-	//alert(teamList[sessionStorage.teamid - 1].QA);
 			
 		if(teamList[sessionStorage.teamid - 1].QA == 2){
-			alert("redirect");
 			window.location = "station-page.html";
 			
 		} else {
 			if(teamList[sessionStorage.teamid - 1].destination == teamList[sessionStorage.teamid - 1].location){
 				document.getElementById("dicebutton").style.visibility = "visible";
 			} else {
-				alert("imhere");
+				document.getElementById("herebutton").style.visibility = "visible";
 			}
 		}
 };
@@ -84,6 +82,8 @@ function rollDice(){
 	xmlhttp.open("POST", "destinationTeamAdd.php", false);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send("id=" + ID + "&destination=" + newDest);
+	
+	document.location = "map-page.html";
 };
 
 function checkPassedGo(roll){
@@ -118,7 +118,41 @@ function passGo(){
 	xmlhttp.send("id=" + ID + "&addbalance=" + addBalance);
 };
 
-function imHere(){}
+function imHere(){
+
+	let ID = sessionStorage.teamid;
+	let QA = 2;
+	let newLoc = teamList[ID-1].destination;
+	
+	
+	var xmlhttp;
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+	
+	if (this.readyState == 4 && this.status == 200){
+		console.log(this.responseText);
+	}
+	
+	};
+	xmlhttp.open("POST", "locationTeamAdd.php", false);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send("id=" + ID + "&location=" + newLoc);
+	
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+	
+	if (this.readyState == 4 && this.status == 200){
+		console.log(this.responseText);
+	}
+	
+	};
+	xmlhttp.open("POST", "QATeamAdd.php", false);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send("id=" + ID + "&qa=" + QA);
+	
+	document.location = "map-page.html";
+	
+	
 	
 
-;
+};
