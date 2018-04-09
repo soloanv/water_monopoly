@@ -2,74 +2,21 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Display a map</title>
+    <title>Bank</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
     <style>
-        body { margin:0; padding:0; overflow: hidden;}
-        #map { position: absolute; width:100%; height: 92%;}
-        div.dice {
-            width: 50px;
-            background: #f5f5f5;
-            border: #999 1px solid;
-            padding: 10px;
-            font-size: 24px;
-            margin: 5px;
-        }
-        #footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            font-size: 24px;
+        body { margin:0; padding:0;}
+        h1 {
             text-align: center;
-            margin-bottom: 10px;
         }
-
-        .container{
-            position:relative;
-            text-align:center;
-            margin-bottom: 10px;
-        }
-
-        #dice1, #dice2 {
-            display:inline-block;
-        }
-        
-        .clear {
-            clear: both;
-        }
-
-        .marker {
-  background-image: url('mapbox-icon.png');
-  background-size: cover;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-
-  
-}
-
-#pause.pause::after {
-    content: 'Play';
-}
-
-.mapboxgl-popup {
-  max-width: 200px;
-  z-index: 999999999;
-}
-
-.mapboxgl-popup-content {
-  text-align: center;
-  font-family: 'Open Sans', sans-serif;
-}
-
-
-
     </style>
+    <script>
+        
+    </script>
 </head>
-<body onload="getTeams(),getProperties(),checkQA(),buildJSON()">
+<body onload="getTeams(),getProperties(),getChance(),getQuestions(),determineStation()">
         <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -84,24 +31,22 @@
                   </div>
                 </div>
               </nav>
+    <h1>BANK</h1>
     
-<div id='map'></div>
-<div id="footer">
-    <h3 id="status" style="clear:left"></h3>
-    <div class="container">
-    <div id="dice1" class="dice" hidden>0</div>
-    <div id="dice2" class="dice" hidden>0</div>
-    <br class="clear">
-    </div>
-    <button style="visibility:hidden" id="dicebutton" onclick="rollDice()" type="button" class="btn btn-primary">ROLL DICE</button>
-	<button style="visibility:hidden" id="herebutton" onclick="imHere()" type="button" class="btn btn-primary">I'm Here!</button>
-</div>
+    <form class="form-horizontal center">
+      <div class="form-group col-sm-10" style="text-align:center">
+        <h4>To purchase in-game currency see CWOA Admin at nearest bank</h4>
+      </div>
+        <div class="form-group">
+          <label for="Amount" class="col-sm-2 control-label">Current Balance</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="balance" readonly>
+          </div>
+        </div>
+      </form>
 
-
-
-<script src="geo.js"></script>
 <script src="logincheck.js"></script>
-<script src="map.js"></script>
+<script src="station.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

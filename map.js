@@ -13,7 +13,7 @@ function getTeams(){
 		}
 	};
 	xmlhttp.open("GET", "generalTeamGet.php", false);
-	xmlhttp.send();	
+	xmlhttp.send();
 };
 
 function getProperties(){
@@ -30,11 +30,6 @@ function getProperties(){
 	xmlhttp.open("GET", "generalPropertyGet.php", false);
 	xmlhttp.send();
 };
-
-
-
-
-
 
 
 function checkQA(){
@@ -124,7 +119,6 @@ function imHere(){
 	let QA = 2;
 	let newLoc = teamList[ID-1].destination;
 	
-	
 	var xmlhttp;
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
@@ -151,8 +145,5 @@ function imHere(){
 	xmlhttp.send("id=" + ID + "&qa=" + QA);
 	
 	document.location = "map-page.html";
-	
-	
-	
 
 };
