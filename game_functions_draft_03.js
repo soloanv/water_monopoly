@@ -4,9 +4,6 @@
 /*Problems needed to be addressed:
 	-More information needed for chance Type values 1 and 2
 		refer to chance() function below for details
-	
-	-Details about property levels needed for paying rent and upgrading properties
-		Refer to payRent function
 */
 
 /*notes:
@@ -19,7 +16,6 @@ if(currentLocation = destination)
 var teamID;
 var questionAnswerValue = // reference database "QA" for 2=true, 1=false. initially this will equal 1 in database
 var currentLocation; // = team's currentLocation. server connection. default set to 1
-var playerAnswer = "null"; // this is the result of a question being answered. It's either "correct" or "null"(incorrect). we can change it to "incorrect" if needed
 var diceRoll; // where will I get this from?
 var getOutOfJailFree = false; // stored in database as true or false
 var destination;
@@ -30,10 +26,7 @@ var teamCurrency;
 
 function onPageLoad(){ // functions like the 'main' method in traditional coding
 
-	// try
 		teamID = sessionStorage.TeamID; // DATABASE CONNECTION TO TeamID
-	// end try catch
-// verify teamID is true
 	if(!sessionStorage==teamID){ // return to login page.
 		window.location = 'index.html';
 	}
@@ -43,7 +36,6 @@ function onPageLoad(){ // functions like the 'main' method in traditional coding
 		questionAnswerValue = // DATABASE CONNECTION TO Team's QA
 		teamCurrency = // DATABASE CONNECTION TO Team's currency
 		currentLocation = // DATABASE CONNECTION TO Team's currentLocation
-		playerAnswer = // DATABASE CONNECTION HERE. 
 		diceRoll = //0 or a null answer
 		getOutOfJailFree = // DATABASE CONNECTION HERE. 0 or 1, true false, etc. just need the connection made here
 		destination = // DATABASE CONNECTION HERE
@@ -99,82 +91,94 @@ function onPageLoad(){ // functions like the 'main' method in traditional coding
 }
 
 
-// ONE LOGIC ERROR NEEDED TO BE RESOLVED (jail). OTHERWISE DONE (4/7/18)
+// DONE (4/7/18)
 function checkStationType(){
 	
 	var stationType = 	// get currentLocation's stationType. // DATABASE INFORMATION NEEDED HERE 	reference generalPropertyGet
 	
-	if (stationType == 1){ // GO type
-		// if-pass-go function will have already been handled
-		// do nothing.
-		return;
-	}
-	
-	else if (stationType == 2){ // property type
-		var propertyOwned = // DATABASE PROPERTY OWNED INFORMATION NEEDED HERE true or false?
-		if(propertyOwned == true){ // different if statement developed
-			askQuestion(); // updates playerAnswer variable
-			payRent();
-			playerAnswer = "null";
-		}
-		
-		if(propertyOwned == false){
-			askQuestion();
-			if(playerAnswer = "correct"){
-				buyProperty(currentLocation);
-				playerAnswer = "null";
-			}
-		}
-	}
-	else if (stationType == 5){ // Players need to answer a question AND pay a fine
-		var jailFine = 200; // how much will the fine be? flowchart showed no fine option? Is it only questions?
-		while(stationType == 5){
+	switch(stationType){ // GO type
+		case 1:
+			// if-pass-go function will have already been handled
+			// do nothing.
+			return;
+			break;
 			
-			var jailQuestionAnswered = 1; // false
-			while(jailQuestionAnswered == 1){
-				alert("You must answer a question correctly and pay a fine to get out of jail.");
-				if(playerAnswer == "null"){ // incorrect
-					askQuestion(); // changes playerAnswer to "correct" or "null" <--incorrect
+		case 2 : // property type	This should be done
+			var propertyOwned = // DATABASE PROPERTY OWNED INFORMATION NEEDED HERE true or false?
+			let playerAnswer;
+			
+			if(propertyOwned == true){ // different if statement developed
+				playerAnswer = askQuestion(); // updates playerAnswer variable to true or false
+				payRent(playerAnswer);
+			}
+		
+			if(propertyOwned == false){ // should be -1 in database
+				playerAnswer = askQuestion();
+				
+				if(playerAnswer == true){
+					buyProperty(currentLocation);
 				}
-				if(playerAnswer == "correct"){
-					alert("Correct! Now you only have to pay the fine. The amount is: " + jailFine);
-					jailQuestionAnswered = 2; // exits this jailQuestionAnswered while loop
+			}
+			break;
+			
+		case 3 : // chance
+			chance();
+			return;
+			break;
+			
+		case 4 : // freeParking
+			// do nothing
+			return;
+			break;
+			
+		case 5 : // Players need to answer a question AND pay a fine
+			var jailFine = 200; // how much will the fine be? flowchart showed no fine option? Is it only questions?
+			while(stationType == 5){
+				
+				
+				var jailQuestionAnswered = false; // false
+				while(jailQuestionAnswered == false){
+					alert("You must answer a question correctly and pay a fine to get out of jail.");
+					if(jailQuestionAnswered == false){ // incorrect
+						jailQuestionAnswered = askQuestion(); // returns true or false based on player answer
+					}
+					if(jailQuestionAnswered == true){
+						alert("Correct! Now you only have to pay the fine. The amount is: " + jailFine);
+						jailQuestionAnswered = 2; // exits this jailQuestionAnswered while loop
+					}
 				}
+				// button to confirm payment
+				if(teamCurrency < jailFine){
+						alert("You do not have the funds to pay the fine. Please see CWOA administrator for additional funds");
+						return; // this should redirect you to the top of the "while(stationType == 5)"
+				}
+				if(teamCurrency >= jailFine){
+						teamCurrency = teamCurrency - jailFine; // UPDATE DATABASE HERE for teamCurrency
+						alert("You have paid the fine and are out of jail");
+				}
+				stationType = 4; // exits the while loop
 			}
-			// button to confirm payment
-			if(teamCurrency < jailFine){
-					alert("You do not have the funds to pay the fine. Please see CWOA administrator for additional funds");
-					return; // this should redirect you to the top of the "while(stationType == 5)"
-			}
-			if(teamCurrency >= jailFine){
-					teamCurrency = teamCurrency - jailFine; // UPDATE DATABASE HERE for teamCurrency
-					alert("You have paid the fine and are out of jail");
-			}
-			stationType = 4; // exits the while loop
-		}
-	}
-	
-	else if (stationType == 3){ // chance
-		chance();
-		return;
-	}
-	else if (stationType == 4){ // freeParking
-		// do nothing
-		return;
+			break;
+			
+			
+			
+			default;
 	}
 }
 
 // AS DONE AS CAN BE. needs GUI relationship set up correctly (4/7/18)
-function askQuestion() {	// retrieve a random question
+function askQuestion() {	// returns a true or false statement
 	var randomQ = getRandomQuestion(); // selects the random question
 	// now grab the question and answers from the database
 	// display  randomQ question here in GUI									reference authentication.js line 4 "fill teams"
+	
+	let playerAnswer = false;
+	
 	
 	var rightAns = document.getElementById('rightAnswer').checked; // verify the getElementById value is the same in the HTML doc for all answers
 	var wrong1 = document.getElementById('wrongOne').checked;
 	var wrong2 = document.getElementById('wrongTwo').checked;
 	var wrong3 = document.getElementById('wrongThree').checked;
-	
 	// this random answer setup is ugly but it works
 	var x = Math.floor(Math.random() * 4 + 1); // selects a random number between 1 and 4
 	if(x == 1){
@@ -188,19 +192,21 @@ function askQuestion() {	// retrieve a random question
 	}
 	else{ // x == 4
 		// display: wrong3, wrong2, wrong1, rightAns
-	}		
+	}	
+	
 	
 	//once players click the button to submit their answer: check player answer
 	if(rightAns == true){
 		alert("Correct!");
-		playerAnswer = "correct"; // DATABASE CONNECTION HERE update playerAnswer variable
+		playerAnswer = true;
 	} else if(wrong1 == true || wrong2 == true || wrong3 == true){
 		alert("Incorrect");
-		playerAnswer = "null"; // DATABASE CONNECTION HERE update playerAnswer variable
+		playerAnswer = false;
 	} else{
 		alert("You must select an answer");
 		return;
 	}		
+	return playerAnswer;
 }
 // DONE WITH CODING (4/7/18)
 function getRandomQuestion(){
@@ -239,7 +245,8 @@ function getNumberOfProperties(){ // like GENERALPROPERTIESGET .PHP FILE. do AJA
 
 
 // DONE WITH CODING (4/7/18) needs GUI interaction for proper setup
-function buyProperty(){
+function buyProperty(playerLocation){
+	
 	var propertyCost = // DATABASE CONNECTION HERE to propertyCost based on currentLocation
 	// display "Buy this property?" with Y/N answer in GUI/HTML
 	if(yes_button.clicked /*or however this page is displayed*/){
@@ -265,23 +272,48 @@ function buyProperty(){
 }
 
 
-// Needs rent amount based on property && upgrade level of property (4/7/18)
-function payRent(){
+// DONE (4/9/18)
+function payRent(playerAnswer){
 	// Find team that owns property.
 	// Update their ^ currency and teamCurrency
-	var rent = // DATABASE CONNECTION NEEDED for property rent amount
-	if (playerAnswer == correct){
-		// offer discount?
+	
+	var rent = // DATABASE CONNECTION NEEDED for property rent amount properties.value
+	let propertyUpgradeLevel = // DATABASE CONNECTION NEEDED
+	switch (propertyUpgradeLevel){
+		case 1 : // no upgrades on property
+			rent = rent;
+			break;
+		case 2 : // 1st upgrade
+			rent = rent * 1.25;
+			break;
+		case 3 : // 2nd upgrade
+			rent = rent*1.5;
+			break;
+		case 4 : // 3rd upgrade
+			rent = rent*1.75;
+			break;
+		case 5 : // 4th upgrade
+			rent = rent*2;
+			break;
+		default;
+	}
+	if (playerAnswer == true){
+		
+		alert("You got a 50% discount on your rent");
+		rent = rent * 0.5;
 		teamCurrency = teamCurrency - rent;
 		propertyOwnerCurrency = propertyOwnerCurrency + rent; // DATABASE CONNECTION to update propertyOwnerCurrency
 		alert("You paid: $" + rent);
 	} else{
 		// playerAnswer was incorrect.
 		// charge full price for rent?
+		teamCurrency = teamCurrency - rent;
 		propertyOwnerCurrency = propertyOwnerCurrency + rent;
 		alert("You paid: $" + rent);
 	}
 }
+
+
 
 
 // MORE INFORMATION NEEDED REGARDING THIS FUNCTIONALITY (chance type values 1 and 2) (4/7/18)
