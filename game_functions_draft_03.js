@@ -1,10 +1,6 @@
 // This is the file that holds every function for the game
 // anywhere a database connection is needed, the word "DATABASE" will be displayed in all caps with a description
 
-/*
-	Working on the chance function still
-*/
-
 // I need these global variables for when functions call each other
 var teamID;
 var questionAnswerValue = // reference database "QA" for 2=true, 1=false. initially this will equal 1 in database
@@ -224,7 +220,7 @@ function getNumOfQuestions(){ // gets the max # of questions from DB GENERALQUES
 
 // DONE. last edit: (4/7/18)
 function checkPassedGo(newDest){
-	var x = newDest; // current number/destination after dice roll
+	let x = newDest; // current number/destination after dice roll
 	var maxStationNumber = getNumberOfProperties();
 	
 	if(x > maxStationNumber){
@@ -322,45 +318,56 @@ function payRent(playerAnswer){
 	}
 }
 
-
-
-
-// MORE INFORMATION NEEDED REGARDING THIS FUNCTIONALITY (chance type values 1 and 2) last edit: (4/7/18)
+// done
 function chance(){
 	var randomC = getRandomChance(); // selects the random chance number
 		// now grab the statement and type from database
 		// display randomC statement here in GUI	
 	
-	var randomChanceType = // DATABASE REFERENCE HERE. chance TYPE based on the number stored in 'randomC'
-
-	var randomChanceType = Math.floor(Math.random() * 4 + 1); // selects a random number between 1 and 4
-	if(randomChanceType == 1){
-		// display the chance message first
-		// change currency - handle if going into negative here
+	var chanceType = // DATABASE REFERENCE HERE. chance TYPE based on the number stored in 'randomC'
+	// display the chance message here
+	
+	switch(chanceType){
+		case 1 : // done
+			// change currency - handle if going into negative here
+			let chanceAmount = //DATABASE info for this number
+			if(chanceAmount < 0){ // if team has to pay - handle teamCurrency amount
+				// check teamCurrency
+				while(teamCurrency < chanceAmount){
+					alert("you don't have enough money to pay this. Please see Administrator for additional funds");
+					// forever loop until they get more money
+				}
+				if(teamCurrency >= chanceAmount){
+					teamCurrency = teamCurrency - chanceAmount; // update DATABASE here
+					alert("You paid: $" + chanceAmount);
+				}
+			}
+			else{ // amount is positive
+				teamCurrency = teamCurrency + chanceAmount; 	// update teamCurrency in DATABASE here
+				alert("You gained: $" + chanceAmount);
+			}
+			break;
 		
+		case 2 : // done
+			let newDest = // DATABASE reference based on chance card
+				currentLocation = newDest;
+				destination = newDest;
+				alert("Your new location is: " + newDest);
+			break;
+		case 3 : // done
+			let jailLocation = // DATABASE jail location
+			destination = jailLocation;
+			// Update DATABASE destination. 
+			// This should also nullify the checkPassedGO function because you didn't roll dice to get there
+			// currentLocation != destination
+			break;
 		
-
-	}
-	else if(randomChanceType == 2){
-		// change location to a new location.
-		// current location and destination will equal the new location indicated by the card
-	}
-	else if(randomChanceType == 3){
-		currentLocation = jailLocation; // UPDATE DATABASE currentLocation
-		destination = jailLocation;// UPDATE DATABASE destination
-		questionAnswerValue = 2;
-		// this 'else-if' is done
-	}
-	else if(randomChanceType == 4){ 
-		getOutOfJailFree = true; // UPDATE DATABASE FOR THIS VARIABLE stating they now have that card
+		case 4: // done
+			getOutOfJailFree = true; // UPDATE DATABASE FOR THIS VARIABLE stating they now have that card
+			break;
+		default;
 	}
 }
-
-
-
-
-
-
 
 // DONE. last edit: (4/7/18)
 function getRandomChance(){
@@ -374,25 +381,4 @@ function getRandomChance(){
 function getNumOfChance(){
 	var numberOfChance = // DATABASE CONNECTION NEEDED HERE
 	return numberOfChance;
-}
-
-
-// DONE. Function never called. last edit: (4/7/18)
-function goToJail(){
-	currentLocation = jailLocation; // database reference here for jail location
-	destination = jailLocation;
-}
-
-// DONE??? I don't think this is needed
-function setDestination(){
-	destination = currentLocation + diceRoll;
-	return destination;
-}
-
-// not needed?
-function getDestination(){
-}
-
-// not needed?
-function updateCurrentLocation(){
 }
