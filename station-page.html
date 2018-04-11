@@ -12,12 +12,12 @@
 
     </style>
 
-<!--<script>
-    $(function showPages(one,two,three,four){ 
-      //var one = true;
-      //var two = true;
-      //var three = true;
-      //var four = true;
+<script>
+    $(function(){ 
+      var one = true;
+      var two = true;
+      var three = true;
+      var four = true;
       if(one){
           $('#jailStation').modal('show');
       }
@@ -31,7 +31,7 @@
         $('#chanceStation').modal('show');
       }
     });
-  </script>-->
+  </script>
 <body>
         <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,7 +50,7 @@
 
 
  <!-- Jail Station -->
- <div id="jailStation" class="modal fade" role="dialog" >
+ <div id="jailStation" class="modal fade" role="dialog" style="visibility:hidden">
         <div class="modal-dialog">
        <!-- Modal content-->
        <div class="modal-content">
@@ -62,30 +62,30 @@
                 <form>
                         <div class="form-group">
                           <p style="color:rgb(233, 72, 72)">Answer a question to get a discount on bail</p><br>
-                          <p>QuestionHere???</p>
+                          <p id="qTitleJail">QuestionHere???</p>
                         </div>
                         <div class="form-group">
                                 <div class="radio">
                                         <label>
-                                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+                                          <input type="radio" name="optionsRadios" id="optionsRadios1Jail" value="0">
                                           Answer1Here
                                         </label>
                                       </div>
                                       <div class="radio">
                                         <label>
-                                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                          <input type="radio" name="optionsRadios" id="optionsRadios2Jail" value="0">
                                           Answer2Here
                                         </label>
                                       </div>
                                       <div class="radio">
                                         <label>
-                                          <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                                          <input type="radio" name="optionsRadios" id="optionsRadios3Jail" value="0">
                                           Answer3Here
                                         </label>
                                       </div>
                                       <div class="radio">
                                             <label>
-                                              <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4" >
+                                              <input type="radio" name="optionsRadios" id="optionsRadios4Jail" value="0" >
                                               Answer4Here
                                             </label>
                                           </div>
@@ -111,16 +111,16 @@
    
 
    <!-- GO/Free Station -->
-   <div id="goFreeStation" class="modal fade" role="dialog" >
+   <div id="goFreeStation" class="modal fade" role="dialog" style="visibility:hidden">
         <div class="modal-dialog">
        <!-- Modal content-->
        <div class="modal-content">
          <div class="modal-header">
-            <h4 class="modal-title">You have landed on PropertyNameHere</h4>
+            <h4 class="modal-title" id="freepropname">You have landed on PropertyNameHere</h4>
            <button type="button" class="close" data-dismiss="modal">&times;</button>
          </div>
          <div class="modal-body" style="text-align:center">
-                          <h4 style="color:rgb(72, 115, 233)">This is a free space</h4><br>
+                          <h4 style="color:rgb(72, 115, 233)">This is a free space.</h4><br>
          </div>
          <div class="modal-footer" style="display:inline-block; text-align:center">
                 <button type="button" class="btn btn-primary" id="goFreeSpaceBtn" onclick="finishStation()">OK</button>
@@ -131,67 +131,67 @@
 
 
    <!-- Normal Property Stations -->
-   <div id="normalStation" class="modal fade" role="dialog" >
+   <div id="normalStation" class="modal fade" role="dialog" style="visibility:hidden">
         <div class="modal-dialog">
        <!-- Modal content-->
        <div class="modal-content">
          <div class="modal-header">
-            <h4 class="modal-title">ProptertyNameHere <br>PropertyOwnerHere? <br>RentHere</h4>
+            <h4 class="modal-title" id="normstattitle"></h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
          </div>
-         <div class="modal-body" id="normalPropQuestion">
+		 <!-- Normal Prop Question -->
+         <div class="modal-body" id="normalPropQuestion" style="visibility:hidden">
                 <form>
                         <div class="form-group">
-                          <p>QuestionHere???</p>
+                          <p id="qTitle"></p>
                         </div>
                         <div class="form-group">
                                 <div class="radio">
                                         <label>
-                                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
-                                          Answer1Here
+                                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="0">
+                                          <b id="ans1"></b>
                                         </label>
                                       </div>
                                       <div class="radio">
                                         <label>
-                                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                          Answer2Here
+                                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="0">
+                                          <b id="ans2"></b>
                                         </label>
                                       </div>
                                       <div class="radio">
                                         <label>
-                                          <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
-                                          Answer3Here
+                                          <input type="radio" name="optionsRadios" id="optionsRadios3" value="0">
+                                          <b id="ans3"></b>
                                         </label>
                                       </div>
                                       <div class="radio">
                                             <label>
-                                              <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4" >
-                                              Answer4Here
+                                              <input type="radio" name="optionsRadios" id="optionsRadios4" value="0" >
+                                              <b id="ans4"></b>
                                             </label>
                                           </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-primary" onclick="questionSubmit()">Submit</button>
                       </form>
          </div>
          <!-- Normal Prop Question Results -->
-         <div class="modal-body" id="normalPropResults" style="display:none">
-          <p style="color:rgb(72, 88, 233)">QuestionResultHere</p>
-          <p>DiscountAmountHere$$$</p>
-          <p>DiscountHere$$$</p>
-          <p>PropertyValueHere$$$</p>
-          <p>TeamBalanceHere$$$</p>
+         <div class="modal-body" id="normalPropResults" style="visibility:hidden">
+          <p style="color:rgb(72, 88, 233)" id="qResult"></p>
+          <p id="discountAmount"></p>
+          <p id="newRent"></p>
+          <p id="teamBalance"></p>
           <div id="vacantPropBtn" style="display:inline-block">
-          <button type="button" class="btn btn-success" onclick="buyProperty();" id="buyProp">Buy Property</button>
-          <button type="button" class="btn btn-secondary" onclick="passProperty();" id="passProp">Don't Buy</button>
+          <button type="button" class="btn btn-success" onclick="buyProperty();" id="buyProp" style="visibility:hidden">Buy Property</button>
+          <button type="button" class="btn btn-secondary" onclick="passProperty();" id="passProp" style="visibility:hidden">Don't Buy</button>
           </div>
           <div id="ownedPropBtn" style="display:block">
-            <button type="button" class="btn btn-danger" onclick="payRent();" id="payRent">Pay Rent</button>
+            <button type="button" class="btn btn-danger" onclick="payRent();" id="payRent" style="visibility:hidden">Pay Rent</button>
           </div>
           </div>
           <!-- If normal property is owned by team -->
-         <div class="modal-body" id="teamOwnedProp" style="display:none">
+         <div class="modal-body" id="teamOwnedProp" style="visibility:hidden">
           <h4 style="color:rgb(72, 88, 233)">You own this property</h4>
-          <button type="button" class="btn btn-primary" id="teamOwnedPropBtn">Ok</button>
+          <button type="button" class="btn btn-primary" id="teamOwnedPropBtn" onclick="finishStation()">Ok</button>
           </div>
          <div class="modal-footer" style="display:none; text-align:center">
          </div>
@@ -200,21 +200,21 @@
    </div>
 
 <!-- Chance Station -->
-   <div id="chanceStation" class="modal fade" role="dialog" >
+   <div id="chanceStation" class="modal fade" role="dialog" style="visibility:hidden">
         <div class="modal-dialog">
        <!-- Modal content-->
        <div class="modal-content">
          <div class="modal-header">
-            <h4 class="modal-title">PropertyNameHere</h4>
+            <h4 class="modal-title" id="chanceTitle">PropertyNameHere</h4>
            <button type="button" class="close" data-dismiss="modal">&times;</button>
          </div>
          <div class="modal-body" style="text-align:center">
-          <button type="button" class="btn btn-primary" onclick="drawCard();" id="drawCardBtn">Draw Card</button>
+          <button type="button" class="btn btn-primary" onclick="drawCard();" id="drawCardBtn" style="visibility:hidden">Draw Card</button>
           <hr>
-          <p>CardTextHere</p>
+          <p id="cardText" style="visibility:hidden"></p>
          </div>
          <div class="modal-footer" style="display:inline-block; text-align:center">
-                <button type="button" class="btn btn-primary" id="chancePropBtn">OK</button>
+                <button type="button" class="btn btn-primary" id="chancePropBtn" onclick="chanceExecute();" style="visibility:hidden">OK</button>
          </div>
        </div>
      </div>
