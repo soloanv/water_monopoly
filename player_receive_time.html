@@ -14,8 +14,8 @@
 			<script>
 // This page will only have to grab the countDownDateown Date from the server for display
 
-					var hours = 1; // You won't need this. This is just for testing purposes
-					var mins = 10; // You won't need this. This is just for testing purposes
+					var hours = 0; // You won't need this. This is just for testing purposes
+					var mins = .05; // You won't need this. This is just for testing purposes
 					var now = new Date().getTime(); // You won't need this. This is just for testing purposes
 					
 					var countDownDate = now + (hours*3600000) + (mins*60000); // This is the only variable that needs to be sent from Server
@@ -40,6 +40,7 @@
 							clearInterval(x);
 							document.getElementById("demo").innerHTML = "EXPIRED";
 							alert("Game Over");
+							window.location = 'https://www.google.com/'; // make this the results page
 						}
 					}, 1000);	
 			</script>
