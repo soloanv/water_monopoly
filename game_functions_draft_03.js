@@ -2,13 +2,7 @@
 // anywhere a database connection is needed, the word "DATABASE" will be displayed in all caps with a description
 
 /*
-	money decrease situations: buy property, pay rent, jail fine, and chance card
-	if they land on their own property
-*/
-
-/*Problems needed to be addressed:
-	-More information needed for chance Type values 1 and 2
-		refer to chance() function below for details
+	Working on the chance function still
 */
 
 // I need these global variables for when functions call each other
@@ -101,25 +95,26 @@ function checkStationType(){
 			// do nothing.
 			return;
 			break;
-			
 		case 2 : // property type	This should be done
 			var propertyOwned = // DATABASE PROPERTY OWNED INFORMATION NEEDED HERE true or false?
 			let playerAnswer;
 			
-			if(propertyOwned == true){ // different if statement developed
+			if(propertyOwned != -1){ // property is owned
+				let propertyOwner = // property.owner in DATABASE
+				if(propertyOwner == teamID){
+					alert("You own this property.");
+					return; // will exit this function 
+				}
 				playerAnswer = askQuestion(); // updates playerAnswer variable to true or false
 				payRent(playerAnswer);
 			}
-		
-			if(propertyOwned == false){ // should be -1 in database
+			if(propertyOwned == -1){ // should be -1 in database
 				playerAnswer = askQuestion();
-				
 				if(playerAnswer == true){
 					buyProperty(currentLocation);
 				}
 			}
 			break;
-			
 		case 3 : // chance
 			chance();
 			return;
@@ -151,7 +146,7 @@ function checkStationType(){
 					var jailQuestionAnswered = askQuestion();
 					if(jailQuestionAnswered == true){
 						jailFine = 150; // fine reduced
-						alert("Correct! You got a discount on your jail fine. The amount is: " + jailFine);
+						alert("You got a discount on your jail fine! The amount is: " + jailFine);
 					}
 					// button to confirm payment - Vanessa GUI here
 					while(teamCurrency < jailFine){
@@ -163,10 +158,10 @@ function checkStationType(){
 							teamCurrency = teamCurrency - jailFine; // UPDATE DATABASE HERE for teamCurrency
 							alert("You have paid the fine and are out of jail");
 					}
-					stationType = 4; //exits outer while loop
+					//exits inner while loop. Never have to adjust stationType.
 				}
 			}
-			break;
+			break;			
 		default;
 	}
 }
@@ -178,7 +173,6 @@ function askQuestion() {	// returns a true or false statement
 	// display  randomQ question here in GUI									reference authentication.js line 4 "fill teams"
 	
 	let playerAnswer = false;
-	
 	
 	var rightAns = document.getElementById('rightAnswer').checked; // verify the getElementById value is the same in the HTML doc for all answers
 	var wrong1 = document.getElementById('wrongOne').checked;
@@ -249,7 +243,7 @@ function getNumberOfProperties(){ // like GENERALPROPERTIESGET .PHP FILE. do AJA
 }
 
 
-// DONE. last edit (4/9/18) needs GUI interaction for proper setup
+// DONE. last edit (4/11/18) needs GUI interaction for proper setup
 function buyProperty(playerLocation){
 	
 	var propertyCost = // DATABASE CONNECTION HERE to propertyCost based on currentLocation
@@ -257,7 +251,6 @@ function buyProperty(playerLocation){
 	if(yes_button.clicked /*or however this page is displayed*/){
 		if(teamCurrency < propertyCost){
 			alert("You don't have enough funds to purchase this property. You may purchase funds through the Admin.");
-			return;
 		}
 		if (teamCurrency >= propertyCost){
 			teamCurrency = teamCurrency - propertyCost; // DATABASE CONNECTION HERE. update teamCurrency
@@ -267,13 +260,10 @@ function buyProperty(playerLocation){
 			// property.ownedBy = teamID			
 		}
 	}
-	return;
 	if(no_button.clicked /*or however this page is displayed*/){
 		// no data changed. No action taken.
 		alert("You have chosen not to purchase this property");
-		return;
 	}
-	return;
 }
 
 
@@ -302,34 +292,33 @@ function payRent(playerAnswer){
 			break;
 		default;
 	}
+	
 	if (playerAnswer == true){
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		// if (teamCurrency < rent){}	--> refer to while(stationType == 5) in stationType function						
+		// refer to stationType == 5 while loop
 		alert("You got a 50% discount on your rent");
 		rent = rent * 0.5;
-		teamCurrency = teamCurrency - rent;
-		propertyOwnerCurrency = propertyOwnerCurrency + rent; // DATABASE CONNECTION to update propertyOwnerCurrency
-		alert("You paid: $" + rent);
+		//keep the players stuck here with a while loop for lack of currency
+		while(teamCurrency < rent){ // this will continuously spit out an alert
+			alert("You don't have the funds to pay for this rent. Please see the Administrator to purchase more currency.");
+			// check teamCurrency
+		}
+		if(teamCurrency >= rent){
+			teamCurrency = teamCurrency - rent; // database update here
+			propertyOwnerCurrency = propertyOwnerCurrency + rent; // DATABASE CONNECTION to update propertyOwnerCurrency
+			alert("You paid: $" + rent);
+		}
+	
+	// if the answer was incorrect. 'playerAnswer = false'
 	} else{
-		// playerAnswer was incorrect.
-		// charge full price for rent?
-		teamCurrency = teamCurrency - rent;
-		propertyOwnerCurrency = propertyOwnerCurrency + rent;
-		alert("You paid: $" + rent);
+		while(teamCurrency < rent){ // this will continuously spit out an alert
+			alert("You don't have the funds to pay for this rent. Please see the Administrator to purchase more currency.");
+			// check teamCurrency
+		}
+		if(teamCurrency >= rent){
+			teamCurrency = teamCurrency - rent; // database update here
+			propertyOwnerCurrency = propertyOwnerCurrency + rent; // DATABASE CONNECTION to update propertyOwnerCurrency
+			alert("You paid: $" + rent);
+		}
 	}
 }
 
@@ -346,8 +335,10 @@ function chance(){
 
 	var randomChanceType = Math.floor(Math.random() * 4 + 1); // selects a random number between 1 and 4
 	if(randomChanceType == 1){
-		// change currency
-		// call a function with a variable for the amount 
+		// display the chance message first
+		// change currency - handle if going into negative here
+		
+		
 
 	}
 	else if(randomChanceType == 2){
@@ -364,6 +355,13 @@ function chance(){
 		getOutOfJailFree = true; // UPDATE DATABASE FOR THIS VARIABLE stating they now have that card
 	}
 }
+
+
+
+
+
+
+
 // DONE. last edit: (4/7/18)
 function getRandomChance(){
 	
