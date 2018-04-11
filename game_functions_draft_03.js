@@ -1,6 +1,11 @@
 // This is the file that holds every function for the game
 // anywhere a database connection is needed, the word "DATABASE" will be displayed in all caps with a description
 
+/*
+	money decrease situations: buy property, pay rent, jail fine, and chance card
+	if they land on their own property
+*/
+
 /*Problems needed to be addressed:
 	-More information needed for chance Type values 1 and 2
 		refer to chance() function below for details
@@ -125,38 +130,44 @@ function checkStationType(){
 			return;
 			break;
 			
-		case 5 : // Players need to answer a question AND pay a fine
+		case 5 : // Should be working (4/10/18)
 			var jailFine = 200; // how much will the fine be? flowchart showed no fine option? Is it only questions?
 			while(stationType == 5){
 				
+				var getOutOfJailFree = // get from database here
+				if (getOutOfJailFree == 1){
+					// display this button				
+					if (/*useCard-button is clicked*/){
+						getOutOfJailFree = 0;
+						stationType = 4;
+						alert("You've used your card and now you're out of jail");
+					}
+				}
+// run the rest of the function inside another while(stationType == 5) (this will prevent the rest from being done if they used the getOutOfJailFree)
 				
-				var jailQuestionAnswered = false; // false
-				while(jailQuestionAnswered == false){
-					alert("You must answer a question correctly and pay a fine to get out of jail.");
-					if(jailQuestionAnswered == false){ // incorrect
-						jailQuestionAnswered = askQuestion(); // returns true or false based on player answer
-					}
+			// questions only happen once. if it's correct, then you get a discount on your fine. otherwise you pay full price.
+				while(stationType == 5){
+					alert("You must answer a question and pay a fine to get out of jail.");
+					var jailQuestionAnswered = askQuestion();
 					if(jailQuestionAnswered == true){
-						alert("Correct! Now you only have to pay the fine. The amount is: " + jailFine);
-						jailQuestionAnswered = 2; // exits this jailQuestionAnswered while loop
+						jailFine = 150; // fine reduced
+						alert("Correct! You got a discount on your jail fine. The amount is: " + jailFine);
 					}
+					// button to confirm payment - Vanessa GUI here
+					while(teamCurrency < jailFine){
+							alert("You do not have the funds to pay the fine. Please see CWOA administrator for additional funds");
+							// teamCurrency = new database connection to check for updated teamCurrency
+							//redirect to bank page? what do we do here?
+					}
+					if(teamCurrency >= jailFine){
+							teamCurrency = teamCurrency - jailFine; // UPDATE DATABASE HERE for teamCurrency
+							alert("You have paid the fine and are out of jail");
+					}
+					stationType = 4; //exits outer while loop
 				}
-				// button to confirm payment
-				if(teamCurrency < jailFine){
-						alert("You do not have the funds to pay the fine. Please see CWOA administrator for additional funds");
-						return; // this should redirect you to the top of the "while(stationType == 5)"
-				}
-				if(teamCurrency >= jailFine){
-						teamCurrency = teamCurrency - jailFine; // UPDATE DATABASE HERE for teamCurrency
-						alert("You have paid the fine and are out of jail");
-				}
-				stationType = 4; // exits the while loop
 			}
 			break;
-			
-			
-			
-			default;
+		default;
 	}
 }
 
@@ -293,6 +304,21 @@ function payRent(playerAnswer){
 	}
 	if (playerAnswer == true){
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		// if (teamCurrency < rent){}	--> refer to while(stationType == 5) in stationType function						
 		alert("You got a 50% discount on your rent");
 		rent = rent * 0.5;
 		teamCurrency = teamCurrency - rent;
@@ -320,11 +346,13 @@ function chance(){
 
 	var randomChanceType = Math.floor(Math.random() * 4 + 1); // selects a random number between 1 and 4
 	if(randomChanceType == 1){
-		// change currency...to what?
-// I need more details about this.
+		// change currency
+		// call a function with a variable for the amount 
+
 	}
 	else if(randomChanceType == 2){
 		// change location to a new location.
+		// current location and destination will equal the new location indicated by the card
 	}
 	else if(randomChanceType == 3){
 		currentLocation = jailLocation; // UPDATE DATABASE currentLocation
