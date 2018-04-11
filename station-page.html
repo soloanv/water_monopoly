@@ -12,17 +12,17 @@
 
     </style>
 
-<script>
-    $(function() { 
-      var one = true;
-      var two = true;
-      var three = true;
-      var four = true;
+<!--<script>
+    $(function showPages(one,two,three,four){ 
+      //var one = true;
+      //var two = true;
+      //var three = true;
+      //var four = true;
       if(one){
           $('#jailStation').modal('show');
       }
-      if(two){
-        $('#goFreeStation').modal('show');
+	  if(two){
+          $('#goFreeStation').modal('show');
       }
       if(three){
         $('#normalStation').modal('show');
@@ -31,7 +31,7 @@
         $('#chanceStation').modal('show');
       }
     });
-  </script>
+  </script>-->
 <body>
         <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@
                     <a class="nav-item nav-link active" href="map-page.html">HOME</a>
                     <a class="nav-item nav-link" href="properties-page.html">PROPERITES</a>
                     <a class="nav-item nav-link" href="bank-page.html">BANK</a>
-                    <a class="nav-item nav-link" href="stations-page.html">STATIONS</a>
+                    <a class="nav-item nav-link" href="map-page.html">MAP</a>
                   </div>
                 </div>
               </nav>
@@ -123,7 +123,7 @@
                           <h4 style="color:rgb(72, 115, 233)">This is a free space</h4><br>
          </div>
          <div class="modal-footer" style="display:inline-block; text-align:center">
-                <button type="button" class="btn btn-primary" id="goFreeSpaceBtn">OK</button>
+                <button type="button" class="btn btn-primary" id="goFreeSpaceBtn" onclick="finishStation()">OK</button>
          </div>
        </div>
      </div>
@@ -220,8 +220,7 @@
      </div>
    </div>
 
-
-<script src="map.js"></script> 
+<script src="station.js"></script> 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
