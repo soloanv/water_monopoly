@@ -2,21 +2,37 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Bank</title>
+    <title>Station Page</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style>
-        body { margin:0; padding:0;}
-        h1 {
-            text-align: center;
-        }
+        body { margin:0; padding:0; overflow: hidden;}
+
     </style>
-    <script>
-        
-    </script>
-</head>
-<body onload="getTeams(),getProperties(),getChance(),getQuestions(),determineStation()">
+
+<script>
+    $(function() { 
+      var one = true;
+      var two = true;
+      var three = true;
+      var four = true;
+      if(one){
+          $('#jailStation').modal('show');
+      }
+      if(two){
+        $('#goFreeStation').modal('show');
+      }
+      if(three){
+        $('#normalStation').modal('show');
+      }
+      if(four){
+        $('#chanceStation').modal('show');
+      }
+    });
+  </script>
+<body>
         <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -24,29 +40,188 @@
                 <a class="navbar-brand" href="index.html">CWOA</a>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                   <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="map-page.html">Home</a>
-                    <a class="nav-item nav-link" href="properties-page.html">Properties</a>
-                    <a class="nav-item nav-link" href="bank-page.html">Bank</a>
-                    <a class="nav-item nav-link" href="map-page.html">Map</a>
+                    <a class="nav-item nav-link active" href="map-page.html">HOME</a>
+                    <a class="nav-item nav-link" href="properties-page.html">PROPERITES</a>
+                    <a class="nav-item nav-link" href="bank-page.html">BANK</a>
+                    <a class="nav-item nav-link" href="stations-page.html">STATIONS</a>
                   </div>
                 </div>
               </nav>
-    <h1>BANK</h1>
-    
-    <form class="form-horizontal center">
-      <div class="form-group col-sm-10" style="text-align:center">
-        <h4>To purchase in-game currency see CWOA Admin at nearest bank</h4>
-      </div>
-        <div class="form-group">
-          <label for="Amount" class="col-sm-2 control-label">Current Balance</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="balance" readonly>
-          </div>
-        </div>
-      </form>
 
-<script src="logincheck.js"></script>
-<script src="station.js"></script>
+
+ <!-- Jail Station -->
+ <div id="jailStation" class="modal fade" role="dialog" >
+        <div class="modal-dialog">
+       <!-- Modal content-->
+       <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">PropertyNameHere<br>You are in jail!</h4>
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <div class="modal-body" id="jailQuestion" style="display:block">
+                <form>
+                        <div class="form-group">
+                          <p style="color:rgb(233, 72, 72)">Answer a question to get a discount on bail</p><br>
+                          <p>QuestionHere???</p>
+                        </div>
+                        <div class="form-group">
+                                <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+                                          Answer1Here
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                          Answer2Here
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                                          Answer3Here
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                            <label>
+                                              <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4" >
+                                              Answer4Here
+                                            </label>
+                                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-danger" onclick="getOutOfJailFree();" style="display:none" id="jailCard">Get out of jail free card</button>
+                      </form>
+         </div>
+         <!-- Jail Results -->
+         <div class="modal-body" id="jailResults" style="display:none">
+                          <p style="color:rgb(72, 88, 233)">QuestionResultHere</p>
+                          <p>DiscountAmountHere$$$</p>
+                          <p>BailCostHere$$$</p>
+                          <p>TotalBalanceHere$$$</p>
+                          <button type="button" class="btn btn-danger" onclick="payBail();" id="payBail">Pay Bail</button>
+         </div>
+         <div class="modal-footer" style="display:none">
+         </div>
+       </div>
+     </div>
+   </div>
+
+   
+
+   <!-- GO/Free Station -->
+   <div id="goFreeStation" class="modal fade" role="dialog" >
+        <div class="modal-dialog">
+       <!-- Modal content-->
+       <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">You have landed on PropertyNameHere</h4>
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <div class="modal-body" style="text-align:center">
+                          <h4 style="color:rgb(72, 115, 233)">This is a free space</h4><br>
+         </div>
+         <div class="modal-footer" style="display:inline-block; text-align:center">
+                <button type="button" class="btn btn-primary" id="goFreeSpaceBtn">OK</button>
+         </div>
+       </div>
+     </div>
+   </div>
+
+
+   <!-- Normal Property Stations -->
+   <div id="normalStation" class="modal fade" role="dialog" >
+        <div class="modal-dialog">
+       <!-- Modal content-->
+       <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">ProptertyNameHere <br>PropertyOwnerHere? <br>RentHere</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <div class="modal-body" id="normalPropQuestion">
+                <form>
+                        <div class="form-group">
+                          <p>QuestionHere???</p>
+                        </div>
+                        <div class="form-group">
+                                <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+                                          Answer1Here
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                          Answer2Here
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                                          Answer3Here
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                            <label>
+                                              <input type="radio" name="optionsRadios" id="optionsRadios4" value="option4" >
+                                              Answer4Here
+                                            </label>
+                                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+         </div>
+         <!-- Normal Prop Question Results -->
+         <div class="modal-body" id="normalPropResults" style="display:none">
+          <p style="color:rgb(72, 88, 233)">QuestionResultHere</p>
+          <p>DiscountAmountHere$$$</p>
+          <p>DiscountHere$$$</p>
+          <p>PropertyValueHere$$$</p>
+          <p>TeamBalanceHere$$$</p>
+          <div id="vacantPropBtn" style="display:inline-block">
+          <button type="button" class="btn btn-success" onclick="buyProperty();" id="buyProp">Buy Property</button>
+          <button type="button" class="btn btn-secondary" onclick="passProperty();" id="passProp">Don't Buy</button>
+          </div>
+          <div id="ownedPropBtn" style="display:block">
+            <button type="button" class="btn btn-danger" onclick="payRent();" id="payRent">Pay Rent</button>
+          </div>
+          </div>
+          <!-- If normal property is owned by team -->
+         <div class="modal-body" id="teamOwnedProp" style="display:none">
+          <h4 style="color:rgb(72, 88, 233)">You own this property</h4>
+          <button type="button" class="btn btn-primary" id="teamOwnedPropBtn">Ok</button>
+          </div>
+         <div class="modal-footer" style="display:none; text-align:center">
+         </div>
+       </div>
+     </div>
+   </div>
+
+<!-- Chance Station -->
+   <div id="chanceStation" class="modal fade" role="dialog" >
+        <div class="modal-dialog">
+       <!-- Modal content-->
+       <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">PropertyNameHere</h4>
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <div class="modal-body" style="text-align:center">
+          <button type="button" class="btn btn-primary" onclick="drawCard();" id="drawCardBtn">Draw Card</button>
+          <hr>
+          <p>CardTextHere</p>
+         </div>
+         <div class="modal-footer" style="display:inline-block; text-align:center">
+                <button type="button" class="btn btn-primary" id="chancePropBtn">OK</button>
+         </div>
+       </div>
+     </div>
+   </div>
+
+
+<script src="map.js"></script> 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
