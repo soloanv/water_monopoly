@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Station Page</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        body { margin:0; padding:0; overflow: hidden;}
+
+    </style>
+
+<script>
+    $(function(){ 
+      var one = true;
+      var two = true;
+      var three = true;
+      var four = true;
+      if(one){
+          $('#jailStation').modal('show');
+      }
+	  if(two){
+          $('#goFreeStation').modal('show');
+      }
+      if(three){
+        $('#normalStation').modal('show');
+      }
+      if(four){
+        $('#chanceStation').modal('show');
+      }
+    });
+  </script>
+<body>
+        <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">CWOA</a>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="map-page.html">HOME</a>
+                    <a class="nav-item nav-link" href="properties-page.html">PROPERITES</a>
+                    <a class="nav-item nav-link" href="bank-page.html">BANK</a>
+                    <a class="nav-item nav-link" href="map-page.html">MAP</a>
+                  </div>
+                </div>
+              </nav>
+
+
+ <!-- Jail Station -->
+ <div id="jailStation" class="modal fade" role="dialog" style="visibility:hidden">
+        <div class="modal-dialog">
+       <!-- Modal content-->
+       <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title" id="jailTitle"></h4>
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <div class="modal-body" id="jailQuestion" style="display:block">
+                <form>
+                        <div class="form-group">
+                          <p style="color:rgb(233, 72, 72)">Answer a question to get a discount on bail</p><br>
+                          <p id="qTitleJail">QuestionHere???</p>
+                        </div>
+                        <div class="form-group">
+                                <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios1Jail" value="0">
+                                          Answer1Here
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios2Jail" value="0">
+                                          Answer2Here
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios3Jail" value="0">
+                                          Answer3Here
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                            <label>
+                                              <input type="radio" name="optionsRadios" id="optionsRadios4Jail" value="0" >
+                                              Answer4Here
+                                            </label>
+                                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-danger" onclick="getOutOfJailFree();" style="display:none" id="jailCard">Get out of jail free card</button>
+                      </form>
+         </div>
+         <!-- Jail Results -->
+         <div class="modal-body" id="jailResults" style="display:none">
+                          <p style="color:rgb(72, 88, 233)">QuestionResultHere</p>
+                          <p>DiscountAmountHere$$$</p>
+                          <p>BailCostHere$$$</p>
+                          <p>TotalBalanceHere$$$</p>
+                          <button type="button" class="btn btn-danger" onclick="payBail();" id="payBail">Pay Bail</button>
+         </div>
+         <div class="modal-footer" style="display:none">
+         </div>
+       </div>
+     </div>
+   </div>
+
+   
+
+   <!-- GO/Free Station -->
+   <div id="goFreeStation" class="modal fade" role="dialog" style="visibility:hidden">
+        <div class="modal-dialog">
+       <!-- Modal content-->
+       <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title" id="freepropname">You have landed on PropertyNameHere</h4>
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <div class="modal-body" style="text-align:center">
+                          <h4 style="color:rgb(72, 115, 233)">This is a free space.</h4><br>
+         </div>
+         <div class="modal-footer" style="display:inline-block; text-align:center">
+                <button type="button" class="btn btn-primary" id="goFreeSpaceBtn" onclick="finishStation()">OK</button>
+         </div>
+       </div>
+     </div>
+   </div>
+
+
+   <!-- Normal Property Stations -->
+   <div id="normalStation" class="modal fade" role="dialog" style="visibility:hidden">
+        <div class="modal-dialog">
+       <!-- Modal content-->
+       <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title" id="normstattitle"></h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+		 <!-- Normal Prop Question -->
+         <div class="modal-body" id="normalPropQuestion" style="visibility:hidden">
+                <form>
+                        <div class="form-group">
+                          <p id="qTitle"></p>
+                        </div>
+                        <div class="form-group">
+                                <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios1" value="0">
+                                          <b id="ans1"></b>
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios2" value="0">
+                                          <b id="ans2"></b>
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                        <label>
+                                          <input type="radio" name="optionsRadios" id="optionsRadios3" value="0">
+                                          <b id="ans3"></b>
+                                        </label>
+                                      </div>
+                                      <div class="radio">
+                                            <label>
+                                              <input type="radio" name="optionsRadios" id="optionsRadios4" value="0" >
+                                              <b id="ans4"></b>
+                                            </label>
+                                          </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="questionSubmit()">Submit</button>
+                      </form>
+         </div>
+         <!-- Normal Prop Question Results -->
+         <div class="modal-body" id="normalPropResults" style="visibility:hidden">
+          <p style="color:rgb(72, 88, 233)" id="qResult"></p>
+          <p id="discountAmount"></p>
+          <p id="newRent"></p>
+          <p id="teamBalance"></p>
+          <div id="vacantPropBtn" style="display:inline-block">
+          <button type="button" class="btn btn-success" onclick="buyProperty();" id="buyProp" style="visibility:hidden">Buy Property</button>
+          <button type="button" class="btn btn-secondary" onclick="passProperty();" id="passProp" style="visibility:hidden">Don't Buy</button>
+          </div>
+          <div id="ownedPropBtn" style="display:block">
+            <button type="button" class="btn btn-danger" onclick="payRent();" id="payRent" style="visibility:hidden">Pay Rent</button>
+          </div>
+          </div>
+          <!-- If normal property is owned by team -->
+         <div class="modal-body" id="teamOwnedProp" style="visibility:hidden">
+          <h4 style="color:rgb(72, 88, 233)">You own this property</h4>
+          <button type="button" class="btn btn-primary" id="teamOwnedPropBtn" onclick="finishStation()">Ok</button>
+          </div>
+         <div class="modal-footer" style="display:none; text-align:center">
+         </div>
+       </div>
+     </div>
+   </div>
+
+<!-- Chance Station -->
+   <div id="chanceStation" class="modal fade" role="dialog" style="visibility:hidden">
+        <div class="modal-dialog">
+       <!-- Modal content-->
+       <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title" id="chanceTitle">PropertyNameHere</h4>
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <div class="modal-body" style="text-align:center">
+          <button type="button" class="btn btn-primary" onclick="drawCard();" id="drawCardBtn" style="visibility:hidden">Draw Card</button>
+          <hr>
+          <p id="cardText" style="visibility:hidden"></p>
+         </div>
+         <div class="modal-footer" style="display:inline-block; text-align:center">
+                <button type="button" class="btn btn-primary" id="chancePropBtn" onclick="chanceExecute();" style="visibility:hidden">OK</button>
+         </div>
+       </div>
+     </div>
+   </div>
+
+<script src="station.js"></script> 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

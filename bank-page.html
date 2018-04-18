@@ -16,7 +16,7 @@
         
     </script>
 </head>
-<body>
+<body onload="getBalance()">
         <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
@@ -24,10 +24,10 @@
                 <a class="navbar-brand" href="index.html">CWOA</a>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                   <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="map-page.html">Home</a>
+                    <a class="nav-item nav-link" href="map-page.html">Home</a>
                     <a class="nav-item nav-link" href="properties-page.html">Properties</a>
-                    <a class="nav-item nav-link" href="#">Bank <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="stations-page.html">Stations</a>
+                    <a class="nav-item nav-link" href="bank-page.html">Bank</a>
+                    <a class="nav-item nav-link" href="map-page.html">Map</a>
                   </div>
                 </div>
               </nav>
@@ -37,26 +37,16 @@
       <div class="form-group col-sm-10" style="text-align:center">
         <h4>To purchase in-game currency see CWOA Admin at nearest bank</h4>
       </div>
-        <div class="form-group" style="text-align:center">
-          <label for="CurrancyRate" class="col-sm-2 control-label">Currancy Exchange Rate</label>
-          <div class="col-sm-10" style="text-align:center">
-            <label for="CurrancyRate" class="col-sm-2 control-label">$100 = $1000 in-game currency</label>
-          </div>
-        </div>
         <div class="form-group">
-          <label for="Amount" class="col-sm-2 control-label">Amount</label>
+          <label for="Amount" class="col-sm-2 control-label">Current Balance</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="Amount" placeholder="$100">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">PURCHASE</button>
+            <input type="text" class="form-control" id="balance" readonly>
           </div>
         </div>
       </form>
 
-
+<script src="logincheck.js"></script>
+<script src="bank.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

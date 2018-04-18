@@ -18,17 +18,13 @@ function fillTeams() {
 			//Parsing the response string as a JSON.
 			responseJSON = JSON.parse(this.responseText);
 			
-			//pulling the teams array out of the json and putting it is "teamList" variable.
-			var teamList = responseJSON.teams;
-			
-			
 			//Looping through the array
-			for(var i = 0; i < teamList.length ; i++){
+			for(var i = 0; i < responseJSON.length ; i++){
 				
 				//here is where the new option for the combobox is created for each team.
 				var newOption = document.createElement("option");
-				newOption.text = teamList[i].tName;
-				newOption.value = i;
+				newOption.text = responseJSON[i];
+				newOption.value = i+1;
 		
 				//apparently some browsers require the null and others don't.
 				//this try catch should fix that.
@@ -47,31 +43,36 @@ function fillTeams() {
 	};
 	
 	//Here is where the actual request happens
-	xmlhttp.open("GET", "teamsGet.php", true);
+	xmlhttp.open("GET", "teamNameGet.php", true);
 	xmlhttp.send();
 }
 
 function validateLogin() {
 	
-	alert('validatelogin');
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		
 		if (this.readyState == 4 && this.status == 200){
 			
-			responseJSON = JSON.parse(this.responseText);
-			var teamList = responseJSON.teams;
+			if(document.getElementById('teamNameCombo').value == "Select name..."){
+				alert('Please Select A Team');
+			}
 			
-			var checkPassOne = teamList[document.getElementById('teamNameCombo').value].tPassOne;
-			var checkPassTwo = teamList[document.getElementById('teamNameCombo').value].tPassTwo;
+			responseJSON = JSON.parse(this.responseText);
+			
+			var teamList = responseJSON;
+			
+			var checkPassOne = teamList[document.getElementById('teamNameCombo').value - 1].passone;
+			var checkPassTwo = teamList[document.getElementById('teamNameCombo').value - 1].passtwo;
 			
 			if(document.getElementById('passOneCombo').value == checkPassOne 
 						&& document.getElementById('passTwoCombo').value == checkPassTwo){
 							
-							alert('Success');
+							sessionStorage.teamid = document.getElementById('teamNameCombo').value;
+							window.location = "map-page.html";
 				
 			} else {
-				alert('Failure');
+				alert('Incorrect Login Details');
 			}
 			
 
@@ -80,11 +81,13 @@ function validateLogin() {
 	};
 	
 	//Here is where the actual request happens
-	xmlhttp.open("GET", "teamsGet.php", true);
+	xmlhttp.open("GET", "teamPassGet.php", true);
 	xmlhttp.send();
 	
 	
 };
+
+
 	
 	
 
