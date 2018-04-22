@@ -58,48 +58,48 @@
             <h4 class="modal-title" id="jailTitle"></h4>
            <button type="button" class="close" data-dismiss="modal">&times;</button>
          </div>
-         <div class="modal-body" id="jailQuestion" style="display:block">
+         <div class="modal-body" id="jailQuestion" style="visibility:hidden">
                 <form>
                         <div class="form-group">
                           <p style="color:rgb(233, 72, 72)">Answer a question to get a discount on bail</p><br>
-                          <p id="qTitleJail">QuestionHere???</p>
+                          <p id="qTitleJail"></p>
                         </div>
                         <div class="form-group">
                                 <div class="radio">
                                         <label>
                                           <input type="radio" name="optionsRadios" id="optionsRadios1Jail" value="0">
-                                          Answer1Here
+                                          <b id="jailAns1"></b>
                                         </label>
                                       </div>
                                       <div class="radio">
                                         <label>
                                           <input type="radio" name="optionsRadios" id="optionsRadios2Jail" value="0">
-                                          Answer2Here
+                                          <b id="jailAns2"></b>
                                         </label>
                                       </div>
                                       <div class="radio">
                                         <label>
                                           <input type="radio" name="optionsRadios" id="optionsRadios3Jail" value="0">
-                                          Answer3Here
+                                          <b id="jailAns3"></b>
                                         </label>
                                       </div>
                                       <div class="radio">
                                             <label>
                                               <input type="radio" name="optionsRadios" id="optionsRadios4Jail" value="0" >
-                                              Answer4Here
+                                              <b id="jailAns4"></b>
                                             </label>
                                           </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" class="btn btn-danger" onclick="getOutOfJailFree();" style="display:none" id="jailCard">Get out of jail free card</button>
+                        <button type="button" class="btn btn-primary" onclick="jailQuestionSubmit();">Submit</button>
+                        <button type="button" class="btn btn-danger" onclick="jailFree();" style="visibility:hidden" id="jailCard">Get out of Jail Free</button>
                       </form>
          </div>
          <!-- Jail Results -->
-         <div class="modal-body" id="jailResults" style="display:none">
-                          <p style="color:rgb(72, 88, 233)">QuestionResultHere</p>
-                          <p>DiscountAmountHere$$$</p>
-                          <p>BailCostHere$$$</p>
-                          <p>TotalBalanceHere$$$</p>
+         <div class="modal-body" id="jailResults" style="visibility:hidden">
+                          <p style="color:rgb(72, 88, 233)" id="jailQuestionResult"></p>
+                          <p id="jailDiscountAmount"></p>
+                          <p id="jailBailCost"></p>
+                          <p id="jailTeamBalance"></p>
                           <button type="button" class="btn btn-danger" onclick="payBail();" id="payBail">Pay Bail</button>
          </div>
          <div class="modal-footer" style="display:none">

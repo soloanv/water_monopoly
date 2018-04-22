@@ -30,4 +30,37 @@ function getBalance() {
 	
 	
 };
+
+function getJailfree() {
+	
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		
+		if (this.readyState == 4 && this.status == 200){
+			
+			responseJSON = JSON.parse(this.responseText);
+			var ID = sessionStorage.teamid;
+			var jailFree = Number(responseJSON[ID-1].jailfree);
+			
+			if(jailFree == 2){
+				document.getElementById("jailfree").value = "Yes";
+			}else{
+				document.getElementById("jailfree").value = "No";
+			}
+			
+			
+			
+			
+			
+
+			
+		}
+	};
+	
+	//Here is where the actual request happens
+	xmlhttp.open("GET", "jailfreeTeamGet.php", true);
+	xmlhttp.send();
+	
+	
+};
 	

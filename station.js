@@ -10,6 +10,7 @@ var destination;
 var gameTimer; //time remaining
 var teamCurrency;
 var newRent;
+var newBail;
 var chanceID;
 var jailList;
 var jailLoc;
@@ -22,11 +23,13 @@ function pageLoad(){
 	getProperties();
 	getChance();
 	getQuestions();
+	checkBal();
+	
 	
 	if(!sessionStorage.teamid){
 		window.location = "index.html";
 	}
-	
+	checkQA();
 	
 	var teamID = sessionStorage.teamid;
 	var questionAnswerValue = teamList[teamID-1].QA;
@@ -44,6 +47,15 @@ function pageLoad(){
 	
 	//determineStation();
 	
+};
+
+function checkBal(){
+	var balance = Number(teamList[sessionStorage.teamid-1].balance)
+	
+	if(balance<=0){
+		alert("You are out of Money! See a CWOA Banker to get more");
+		window.location = "bank-page.html"
+	}
 };
 
 function getTeams(){
@@ -107,11 +119,10 @@ function getQuestions(){
 };
 
 function checkQA(){
-		alert("CheckQA/QA= " + teamList[sessionStorage.teamid - 1].QA);
-		if(Number(teamList[sessionStorage.teamid - 1].QA) != 2){
-			window.location = "map-page.html";
+		if(Number(teamList[sessionStorage.teamid - 1].QA) == 2){
+			
 		} else {
-			determineStation();
+			window.location = "map-page.html";
 		}
 };
 
@@ -161,7 +172,7 @@ function checkStationType(){
 			document.getElementById("normstattitle").innerHTML = 
 				propertyList[currentStation-1].name + " <br>Rent: $" + rent;
 			
-			alert(propertyOwner);
+			
 			if(Number(propertyOwner) != -1){ // property is owned
 				if(Number(propertyOwner) == Number(sessionStorage.teamid)){
 					document.getElementById("teamOwnedProp").style.visibility = "visible";
@@ -195,46 +206,14 @@ function checkStationType(){
 			
 			console.log("Jail Stationtype");
 			document.getElementById("jailStation").style.visibility = "visible";
+			document.getElementById("jailQuestion").style.visibility = "visible";
 			document.getElementById("jailTitle").innerHTML = propertyList[currentStation-1].name + "<br>You are in jail!";
 			
-			
-			
-			
-			var jailFine = 200; 
-			while(stationType == 5){
-				
-				var getOutOfJailFree;// get from database here
-				if (getOutOfJailFree == 1){
-					// display this button				
-					if (){
-						getOutOfJailFree = 0;
-						stationType = 4;
-						alert("You've used your card and now you're out of jail");
-					}
-				}
-// run the rest of the function inside another while(stationType == 5) (this will prevent the rest from being done if they used the getOutOfJailFree)
-				
-			// questions only happen once. if it's correct, then you get a discount on your fine. otherwise you pay full price.
-				while(stationType == 5){
-					alert("You must answer a question and pay a fine to get out of jail.");
-					var jailQuestionAnswered = askQuestion();
-					if(jailQuestionAnswered == true){
-						jailFine = 150; // fine reduced
-						alert("You got a discount on your jail fine! The amount is: " + jailFine);
-					}
-					// button to confirm payment - Vanessa GUI here
-					while(teamCurrency < jailFine){
-							alert("You do not have the funds to pay the fine. Please see CWOA administrator for additional funds");
-							// teamCurrency = new database connection to check for updated teamCurrency
-							//redirect to bank page? what do we do here?
-					}
-					if(teamCurrency >= jailFine){
-							teamCurrency = teamCurrency - jailFine; // UPDATE DATABASE HERE for teamCurrency
-							alert("You have paid the fine and are out of jail");
-					}
-					//exits inner while loop. Never have to adjust stationType.
-				}
+			if(Number(teamList[sessionStorage.teamid-1].jailfree) == 2){
+				document.getElementById("jailCard").style.visibility = "visible";
 			}
+			randomJailQuestion();
+			
 			break;	
 			
 		default:
@@ -296,6 +275,56 @@ function randomQuestion(){
 	
 };
 
+function randomJailQuestion(){
+	let question = getRandomQuestion();
+	document.getElementById("qTitleJail").innerHTML = questionList[question-1].question;
+	var x = Math.floor(Math.random() * 4 + 1); // selects a random number between 1 and 4
+	if(x == 1){
+		document.getElementById("jailAns1").innerHTML = questionList[question-1].correct;
+		document.getElementById("optionsRadios1Jail").value = 1;
+		document.getElementById("jailAns2").innerHTML = questionList[question-1].wrongone;
+		document.getElementById("optionsRadios2Jail").value = 0;
+		document.getElementById("jailAns3").innerHTML = questionList[question-1].wrongtwo;
+		document.getElementById("optionsRadios3Jail").value = 0;
+		document.getElementById("jailAns4").innerHTML = questionList[question-1].wrongthree;
+		document.getElementById("optionsRadios4Jail").value = 0;
+	} 
+	else if(x == 2){
+		// display: wrong1, rightAns, wrong2, wrong3 
+		document.getElementById("jailAns1").innerHTML = questionList[question-1].wrongone;
+		document.getElementById("optionsRadios1Jail").value = 0;
+		document.getElementById("jailAns2").innerHTML = questionList[question-1].correct;
+		document.getElementById("optionsRadios2Jail").value = 1;
+		document.getElementById("jailAns3").innerHTML = questionList[question-1].wrongtwo;
+		document.getElementById("optionsRadios3Jail").value = 0;
+		document.getElementById("jailAns4").innerHTML = questionList[question-1].wrongthree;
+		document.getElementById("optionsRadios4Jail").value = 0;
+	}
+	else if(x == 3){
+		// display: wrong2, wrong1, rightAns, wrong3
+		document.getElementById("jailAns3").innerHTML = questionList[question-1].correct;
+		document.getElementById("optionsRadios3Jail").value = 1;
+		document.getElementById("jailAns2").innerHTML = questionList[question-1].wrongone;
+		document.getElementById("optionsRadios2Jail").value = 0;
+		document.getElementById("jailAns1").innerHTML = questionList[question-1].wrongtwo;
+		document.getElementById("optionsRadios1Jail").value = 0;
+		document.getElementById("jailAns4").innerHTML = questionList[question-1].wrongthree;
+		document.getElementById("optionsRadios4Jail").value = 0;
+	}
+	else{ // x == 4
+		// display: wrong3, wrong2, wrong1, rightAns
+		document.getElementById("jailAns4").innerHTML = questionList[question-1].correct;
+		document.getElementById("optionsRadios4Jail").value = 1;
+		document.getElementById("jailAns2").innerHTML = questionList[question-1].wrongone;
+		document.getElementById("optionsRadios2Jail").value = 0;
+		document.getElementById("jailAns3").innerHTML = questionList[question-1].wrongtwo;
+		document.getElementById("optionsRadios3Jail").value = 0;
+		document.getElementById("jailAns1").innerHTML = questionList[question-1].wrongthree;
+		document.getElementById("optionsRadios1Jail").value = 0;
+	}
+	
+};
+
 function getRandomQuestion(){
 	
 	var maxQ = getNumOfQuestions();
@@ -336,6 +365,32 @@ function questionSubmit(){
 	}
 };
 
+function jailQuestionSubmit(){
+	let answer = 2;
+	let onecheck = document.getElementById("optionsRadios1Jail").checked;
+	let twocheck = document.getElementById("optionsRadios2Jail").checked;
+	let threecheck = document.getElementById("optionsRadios3Jail").checked;
+	let fourcheck = document.getElementById("optionsRadios4Jail").checked;
+	
+	if(onecheck){
+		answer = document.getElementById("optionsRadios1Jail").value;
+	}else if(twocheck){
+		answer = document.getElementById("optionsRadios2Jail").value;
+	}else if(threecheck){
+		answer = document.getElementById("optionsRadios3Jail").value;
+	}else if(fourcheck){
+		answer = document.getElementById("optionsRadios4Jail").value;
+	}else{ //nothing checked
+		alert("Please Select an Answer");
+	}
+	
+	if(answer == 1){
+		correctAnswerJail();
+	}else if(answer == 0){
+		wrongAnswerJail();
+	}
+};
+
 function correctAnswer(){
 	document.getElementById("normalPropQuestion").style.visibility = "hidden";
 	document.getElementById("normalPropResults").style.visibility = "visible";
@@ -351,7 +406,7 @@ function correctAnswer(){
 	if(propertyOwner != -1){ // property is owned
 		document.getElementById("payRent").style.visibility = "visible";
 		document.getElementById("discountAmount").innerHTML = "25% Rent Discount";
-		newRent = ((propertyList[currentLocation-1].val)*.75);
+		newRent = Math.floor(Number(propertyList[currentLocation-1].val)*.75);
 	document.getElementById("newRent").innerHTML = "Rent after discount: $" + newRent;
 		
 	}else if(propertyOwner == -1){ // should be -1 in database
@@ -385,13 +440,33 @@ function wrongAnswer(){
 	}
 };
 
+function correctAnswerJail(){
+	document.getElementById("jailQuestion").style.visibility = "hidden";
+	document.getElementById("jailResults").style.visibility = "visible";
+	document.getElementById("jailQuestionResult").innerHTML = "Correct!";
+	document.getElementById("jailDiscountAmount").innerHTML = "50% discount on Bail!";
+	newBail = Math.floor((Number(propertyList[teamList[sessionStorage.teamid-1].destination-1].val)*.5));
+	document.getElementById("jailBailCost").innerHTML = "Your Bail is: $" + newBail;
+	document.getElementById("jailTeamBalance").innerHTML = "Your Current Balance is: $" + teamList[sessionStorage.teamid-1].balance;
+};
+
+function wrongAnswerJail(){
+	document.getElementById("jailQuestion").style.visibility = "hidden";
+	document.getElementById("jailResults").style.visibility = "visible";
+	document.getElementById("jailQuestionResult").innerHTML = "Wrong Answer!";
+	document.getElementById("jailDiscountAmount").innerHTML = "No discount on Bail!";
+	newBail = Number(propertyList[teamList[sessionStorage.teamid-1].destination-1].val);
+	document.getElementById("jailBailCost").innerHTML = "Your Bail is: $" + newBail;
+	document.getElementById("jailTeamBalance").innerHTML = "Your Current Balance is: $" + teamList[sessionStorage.teamid-1].balance;
+};
+
 function payRent(){
 	xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		
 		if (this.readyState == 4 && this.status == 200){
 			//Do Whatever should be done on success
-			alert(this.responseText);
+			console.log(this.responseText);
 		}
 	};
 	
@@ -411,7 +486,7 @@ function payRent(){
 		
 		if (this.readyState == 4 && this.status == 200){
 			//Do Whatever should be done on success
-			alert(this.responseText);
+			console.log(this.responseText);
 		}
 	};
 	
@@ -429,10 +504,60 @@ function payRent(){
 	
 	
 	
-	alert("You have paid $" + newRent);
+	alert("You have paid $" + newRent + " in Rent");
 	updateQA();
 	window.location = "map-page.html";
 };
+
+function payBail(){
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		
+		if (this.readyState == 4 && this.status == 200){
+			//Do Whatever should be done on success
+			console.log(this.responseText);
+		}
+	};
+	
+	//The team we want to edit.
+	var ID = sessionStorage.teamid;
+	
+	//How much money we are adding.
+	var addBalance = Number(newBail) * -1;
+	
+	//Here is where the actual request happens
+	xmlhttp.open("POST", "balanceTeamAdd.php", false);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send("id=" + ID + "&addbalance=" + addBalance);
+	
+	
+	
+	
+	alert("You have paid $" + newBail + " in Bail");
+	updateQA();
+	window.location = "map-page.html";
+};
+
+function jailFree(){
+	
+	var xmlhttp;
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		
+		if (this.readyState == 4 && this.status == 200){
+			console.log(this.responseText);
+		}
+	};
+	var ID = Number(sessionStorage.teamid);
+	xmlhttp.open("POST", "jailfreeTeamRemove.php", false);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send("id=" + ID);
+	
+	updateQA();
+	window.location = "map-page.html";
+};
+
+
 function passProperty(){
 	updateQA();
 	window.location = "map-page.html";
@@ -444,7 +569,7 @@ function buyProperty(){
 		
 		if (this.readyState == 4 && this.status == 200){
 			//Do Whatever should be done on success
-			alert(this.responseText);
+			console.log(this.responseText);
 		}
 	};
 	
@@ -465,7 +590,7 @@ function buyProperty(){
 		
 		if (this.readyState == 4 && this.status == 200){
 			//Do Whatever should be done on success
-			alert(this.responseText);
+			console.log(this.responseText);
 		}
 	};
 	
@@ -483,7 +608,7 @@ function buyProperty(){
 	
 	
 	
-	alert("You Purchased the Propperty for $" + newRent);
+	alert("You Purchased the Property for $" + newRent);
 	updateQA();
 	window.location = "map-page.html";
 };
@@ -500,7 +625,7 @@ function drawCard(){
 
 function chanceExecute(){
 	let chanceType = chanceList[chanceID-1].type;
-	alert("ChanceType" + chanceType);
+	console.log("ChanceType" + chanceType);
 	switch(Number(chanceType)){
 		case 1:
 			chanceBalance(chanceList[chanceID-1].result);
@@ -510,6 +635,9 @@ function chanceExecute(){
 			break;
 		case 3:
 			chanceJail();
+			break;
+		case 4:
+			chanceJailfree();
 			break;
 		default:
 	}
@@ -521,7 +649,7 @@ function chanceBalance(chanceResult){
 		
 		if (this.readyState == 4 && this.status == 200){
 			//Do Whatever should be done on success
-			alert(this.responseText);
+			console.log(this.responseText);
 		}
 	};
 	
@@ -547,7 +675,7 @@ function chanceDestination(chanceResult){
 		
 		if (this.readyState == 4 && this.status == 200){
 			//Do Whatever should be done on success
-			alert(this.responseText);
+			console.log(this.responseText);
 		}
 	};
 	
@@ -575,9 +703,8 @@ function chanceJail(){
 		if (this.readyState == 4 && this.status == 200){
 			responseJSON = JSON.parse(this.responseText);
 			var jailList = responseJSON;
-			alert(this.responseText);
+			console.log(this.responseText);
 			jailLoc = jailList[0].id;
-			alert("inloop" + jailLoc);
 
 		}
 	};
@@ -590,14 +717,13 @@ function chanceJail(){
 		
 		if (this.readyState == 4 && this.status == 200){
 			//Do Whatever should be done on success
-			alert(this.responseText);
+			console.log(this.responseText);
 		}
 	};
 	
 	//The team we want to edit.
 	var ID = sessionStorage.teamid;
 	
-	alert(jailLoc);
 	xmlhttp.open("POST", "destinationTeamAdd.php", false);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send("id=" + ID + "&destination=" + jailLoc);	
@@ -607,7 +733,24 @@ function chanceJail(){
 	
 };
 
-
+function chanceJailfree(){
+	var ID = sessionStorage.teamid;
+	var xmlhttp;
+	xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		
+		if (this.readyState == 4 && this.status == 200){
+			console.log(this.responseText);
+		}
+	};
+	xmlhttp.open("POST", "jailfreeTeamAdd.php", false);
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send("id=" + ID);
+	
+	updateQA();
+	window.location = "map-page.html";
+	
+};
 
 function getRandomChance(){
 	
@@ -622,6 +765,10 @@ function getNumOfChance(){
 	return numberOfChance;
 }
 
+function finishStation(){
+	updateQA();
+	window.location = "map-page.html";
+};
 
 function updateQA(){
 	let ID = sessionStorage.teamid;

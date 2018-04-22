@@ -5,11 +5,19 @@ var propertyList;
 function pageLoad(){
 	getTeams();
 	getProperties();
+	checkBal();
 	checkQA();
 	buildMap();
 };
 
-
+function checkBal(){
+	var balance = Number(teamList[sessionStorage.teamid-1].balance)
+	
+	if(balance<=0){
+		alert("You are out of Money! See a CWOA Banker to get more");
+		window.location = "bank-page.html"
+	}
+};
 
 
 function getTeams(){
@@ -54,7 +62,7 @@ function checkQA(){
 			} else {
 				
 				document.getElementById("herebutton").style.visibility = "visible";
-				status.innerHTML = "Move " + sessionStorage.diceroll + " spaces";
+				document.getElementById("diceRollResult").innerHTML = "Move " + sessionStorage.diceroll + " spaces";
 			}
 		}
 };
