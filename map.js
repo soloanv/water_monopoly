@@ -14,7 +14,7 @@ function checkBal(){
 	var balance = Number(teamList[sessionStorage.teamid-1].balance)
 	
 	if(balance<=0){
-		alert("You are out of Money! See a CWOA Banker to get more");
+		alert("You are out of Money! See a CWOA Bank or sell a property to get more");
 		window.location = "bank-page.html"
 	}
 };

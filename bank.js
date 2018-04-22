@@ -17,7 +17,7 @@ function getBalance() {
 			document.getElementById("balance").value = "$" + teamList[ID - 1].balance;
 			
 			if(teamList[ID - 1].balance <= 0){
-				alert("You are out of money. Visit a CWOA bank to get more!");
+				alert("You are out of money. Visit a CWOA bank or sell a property to get more!");
 			}
 
 			
